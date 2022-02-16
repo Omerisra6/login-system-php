@@ -27,7 +27,7 @@
 
     $loggedUsers = getLoggedUsers();
 
-    //Success
-    header("HTTP/1.1 200 User logged in successfully");
+    echo( json_encode( $loggedUsers ) );
+    header("HTTP/1.1 200 Logged users returned sucess");
     exit();
 ?>
