@@ -60,28 +60,29 @@
 
         foreach ( $usersFolder  as $userFile ) {
             
-            $userDetails = getUserFromFile(  __DIR__ . '/users/' . $userFile );
+            $user_details = getUserFromFile(  __DIR__ . '/users/' . $userFile );
 
+            var_dump( $user_details );
             //Skips offline users
-            if ( $userDetails[ 5 ] === 'offline') {
+            if ( $user_details[ 5 ] === 'offline') {
                 continue;
             }
 
             //Updates the current user
-            $username = $userDetails[ 0 ];
+            $username = $user_details[ 0 ];
             if ( $_SESSION[ 'username' ] === $username ) {
                 updateUser();
                 continue;
             }
 
             //Removes password from user
-            unset( $userDetails[ 1 ] );
+            unset( $user_details[ 1 ] );
 
             //Adds only user which was active in the last three minutes
-            $lastTimeActive = strtotime( $userDetails[ 5 ] );
+            $lastTimeActive = strtotime( $user_details[ 5 ] );
             $minutes = 3;
             if ( time() - $lastTimeActive  <  $minutes * 60 ){
-                array_push( $loggedUsers, $userDetails );
+                array_push( $loggedUsers, $user_details );
 
             }
             
