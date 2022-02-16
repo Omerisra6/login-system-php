@@ -3,8 +3,8 @@
     //Creats csv file for user`s details
     function addUser( $username, $password ){
 
-        $userDetailsPath = getUserDetailsPath( $username );
-        $handle = fopen( $userDetailsPath, 'w');
+        $user_details_path = getUserDetailsPath( $username );
+        $handle = fopen( $user_details_path, 'w');
         
         $hashed_password = password_hash( $password, PASSWORD_DEFAULT);
         $login_count     = 0;
@@ -27,7 +27,6 @@
         $_SESSION[ 'username' ] = $username;
     }
 
-
     function loginUser( $username, $password){
 
         $user_details = getUser( $username );
@@ -49,6 +48,46 @@
         markUserOffline();
 
         session_destroy();
+
+    }
+
+    //Returns all logged users
+    function getLoggedUsers(){
+
+        $loggedUsers = array();
+
+        $usersFolder =  preg_grep('/^([^.])/', scandir( __DIR__  . '/users' ));
+
+        foreach ( $usersFolder  as $userFile ) {
+            
+            $userDetails = getUserFromFile(  __DIR__ . '/users/' . $userFile );
+
+            //Skips offline users
+            if ( $userDetails[ 5 ] === 'offline') {
+                continue;
+            }
+
+            //Updates the current user
+            $username = $userDetails[ 0 ];
+            if ( $_SESSION[ 'username' ] === $username ) {
+                updateUser();
+                continue;
+            }
+
+            //Removes password from user
+            unset( $userDetails[ 1 ] );
+
+            //Adds only user which was active in the last three minutes
+            $lastTimeActive = strtotime( $userDetails[ 5 ] );
+            $minutes = 3;
+            if ( time() - $lastTimeActive  <  $minutes * 60 ){
+                array_push( $loggedUsers, $userDetails );
+
+            }
+            
+        }
+
+        return  $loggedUsers;
 
     }
 
