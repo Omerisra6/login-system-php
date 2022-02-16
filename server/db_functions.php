@@ -43,6 +43,15 @@
         $_SESSION[ 'username' ] = $username;
     }
 
+    //Destroys session and marks user as offline
+    function logOutUser(){
+
+        markUserOffline();
+
+        session_destroy();
+
+    }
+
     //Gets user details from username
     function getUser( $username ){
         $user_details_path =  getUserDetailsPath( $username );
@@ -97,6 +106,17 @@
         fputcsv( $handle, $new_user, ','); 
 
         fclose( $handle );
+    }
+
+    //Marks user as offline in csv file
+    function markUserOffline(){
+
+        $username = $_SESSION[ 'username' ];
+        $user_details =  getUser( $username );
+
+        $user_details[ 5 ] = 'offline';
+        putUserDetials( $username, $user_details );
+
     }
 
 ?>
