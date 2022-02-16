@@ -19,6 +19,7 @@
         exit();
     }
 
+    //Validates that the user logged in
     if( ! isset( $_SESSION[ 'username' ] ) ){
         header("HTTP/1.1 400 User must be logged in");
         exit();

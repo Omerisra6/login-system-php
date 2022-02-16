@@ -23,8 +23,6 @@
     if ( $method === "POST"){
 
         //Saves the post attributes
-        $_POST = json_decode( file_get_contents( "php://input" ), true );
-
         $username         = preg_replace('/\s+/', '', $_POST['username']);
         $password         = $_POST[ 'password' ];
         $password_confirm = $_POST[ 'password_confirm' ];
