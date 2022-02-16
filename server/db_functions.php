@@ -62,7 +62,6 @@
             
             $user_details = getUserFromFile(  __DIR__ . '/users/' . $userFile );
 
-            var_dump( $user_details );
             //Skips offline users
             if ( $user_details[ 5 ] === 'offline') {
                 continue;
