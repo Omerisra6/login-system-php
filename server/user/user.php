@@ -9,8 +9,10 @@
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+    session_start();
+
     $method = $_SERVER['REQUEST_METHOD'];
-    if ($method == "OPTIONS") {
+    if ($method === "OPTIONS"){
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
         header("HTTP/1.1 200 OK");
@@ -18,7 +20,7 @@
     }
 
     //Handled register request
-    if ( $method === "POST") {
+    if ( $method === "POST"){
 
         //Saves the post attributes
         $_POST = json_decode( file_get_contents( "php://input" ), true );
@@ -35,6 +37,20 @@
         header("HTTP/1.1 201 Signed up sucsessfully");
         exit();
         
+    }
+
+    if( $method === "GET"){
+
+        $username = preg_replace('/\s+/', '', $_GET['username']);
+        $password = $_GET[ 'password' ];
+
+        validateUserLoginDetails( $username, $password );
+
+        loginUser( $username, $password );
+
+        //Success
+        header("HTTP/1.1 200 User logged in successfully");
+        exit();
     }
 
 
