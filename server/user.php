@@ -47,7 +47,7 @@
         loginUser( $username, $password );
 
         //Success
-        header("HTTP/1.1 200 User logged in successfully");
+        header("HTTP/1.1 200 User logged in sucsessfully");
         exit();
     }
 
