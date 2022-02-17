@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../form.css">
+    <title>Sign Up</title>
+</head>
+<body>
+    <div class="form-wrapper"> 
+
+        <form class="form-container" action="/server/user.php" method="post">
+
+            <h1 class="title">Sign Up.</h1>
+
+            <div class="form-input providers"><i class="fa fa-google"></i> <h5>Start With Google </h5></div>
+            <div class="form-input providers"><i class="fa fa-facebook"></i> <h5>Start With Facebook </h5></div>
+
+            <h3> or </h3>
+
+            <input type="text" class="form-input" placeholder="Username" name="username" id="username"/>
+            <input type="password" class="form-input" placeholder="Password" name="password" id="password"/>
+            <input type="password" class="form-input" placeholder="Password Confirm" name="password_confirm" id="password_confirm"/>
+
+
+            <button class="form-sumbit-button" type="submit">Signup</button>
+
+            <div>Already have an account? <a href='../login/login.html' class="text-action">Login</span></a>
+
+
+        </form>
+    
+    </div>
+</body>
+</html>
