@@ -32,7 +32,8 @@
         addUser( $username, $password );
 
         //Successfull signup
-        header("HTTP/1.1 201 Signed up sucsessfully");
+        header("HTTP/1.1 200 Signed up sucsessfully");
+        header("Location: http://localhost:8000/client/index/index.php");
         exit();
         
     }
@@ -48,6 +49,7 @@
 
         //Success
         header("HTTP/1.1 200 User logged in sucsessfully");
+        header("Location: http://localhost:8000/client/index/index.php");
         exit();
     }
 
