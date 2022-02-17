@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+
 *{
     margin: 0;
     text-decoration: none;
@@ -5,10 +7,15 @@
 
 body{
    background-color: #5C5C67; 
+   font-family: Rubik;
 }
 
 *:focus {
     outline: none;
+}
+
+.fa{
+    width: 1vw;
 }
 
 .form-wrapper{
@@ -19,14 +26,18 @@ body{
     height: 80vh;
     width: 90vw;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 5vh 1vw;
     background-color: #181820;
     border-radius: 8px;
+    overflow: hidden;
 }
 
 .form-container{
+    position: relative;
+    bottom: 10vh;
     height: 60vh;
     display: flex;
     color: #AEAEB0;
@@ -45,6 +56,7 @@ body{
 .form-input{
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 15vw;
     border-radius: 8px;
     border: 2px solid #2B2B37;
@@ -60,11 +72,17 @@ body{
 
 .providers{
     cursor: pointer;
+    gap: 0.8vw;
+}
+
+.providers > i{
+    color: #ffff;
+    font-size: 1vw;
 }
 
 .form-sumbit-button{
     width: 17vw;
-    background: linear-gradient(to right, #b24592, #f15f79);
+    background: linear-gradient( to right top, #802698, #F288BF, #FBC092);
     border: none;
     padding: 1.5vh 1vw;
     border-radius: 4px;
@@ -77,4 +95,24 @@ body{
     color: white;
     cursor: pointer;
     border-bottom: none;
+}
+
+.black-circle{
+    position: relative;
+    left: 10vw;
+    bottom: 10vh;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient( to right top, #111116, #2E2E3E);
+}
+
+.pink-circle{
+    position: relative;
+    right: 12vw;
+    bottom: 9vh;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: linear-gradient( to right top, #802698, #F288BF, #FBC092);
 }
