@@ -1,0 +1,80 @@
+*{
+    margin: 0;
+    text-decoration: none;
+}
+
+body{
+   background-color: #5C5C67; 
+}
+
+*:focus {
+    outline: none;
+}
+
+.form-wrapper{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 80vh;
+    width: 90vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5vh 1vw;
+    background-color: #181820;
+    border-radius: 8px;
+}
+
+.form-container{
+    height: 60vh;
+    display: flex;
+    color: #AEAEB0;
+    flex-direction: column;
+    gap: 2vh;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.title{
+    color: #FFFFFF;
+    font-size: 3vw;
+}
+
+.form-input{
+    display: flex;
+    justify-content: center;
+    width: 15vw;
+    border-radius: 8px;
+    border: 2px solid #2B2B37;
+    padding: 1vh 1vw;
+    background-color: #181820;
+    color: #AEAEB0;
+}
+
+.form-input::placeholder{
+    color: #AEAEB0;
+
+}
+
+.providers{
+    cursor: pointer;
+}
+
+.form-sumbit-button{
+    width: 17vw;
+    background: linear-gradient(to right, #b24592, #f15f79);
+    border: none;
+    padding: 1.5vh 1vw;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+
+}
+
+.text-action{
+    color: white;
+    cursor: pointer;
+    border-bottom: none;
+}
