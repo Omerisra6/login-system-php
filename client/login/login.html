@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./login.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="login-form-wrapper"> 
+
+        <form class="login-form-container" action="/server/user.php" method="get">
+
+            <h1 class="title">Log in.</h1>
+
+            <div class="form-input providers"><i class="fa fa-google"></i> <h5>Continue With Google </h5></div>
+            <div class="form-input providers"><i class="fa fa-facebook"></i> <h5>Continue With Facebook </h5></div>
+
+            <h3> or </h3>
+
+            <input type="text" class="form-input" placeholder="Username" name="username" id="username"/>
+            <input type="password" class="form-input" placeholder="Password" name="password" id="password"/>
+
+            <button class="form-sumbit-button" type="submit">Login</button>
+
+            <div>Dont have an account? <a href='./register/register.html' class="text-action">Create account</span></a>
+
+
+        </form>
+    
+    </div>
+</body>
+</html>
