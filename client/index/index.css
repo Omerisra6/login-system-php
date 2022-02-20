@@ -67,3 +67,18 @@ th:last-child {
     -moz-border-radius:0 10px 10px 0;
     -webkit-border-radius:0 10px 10px 0;
 }
+
+.index-top{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.logout-button{
+    background: linear-gradient( to right, #64598F, #384978);
+    border: none;
+    padding: 1.5vh 1vw;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+}
