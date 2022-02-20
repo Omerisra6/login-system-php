@@ -71,7 +71,6 @@ const attachListenersToUsers = async() => {
         user.addEventListener( 'click', async () => {
             const username    = user.dataset.name
             const userDetails = await getUser( username )
-            console.log( userDetails )
             appendUserToPop( userDetails )
             loggedUserDetailsPopWrapper.classList.toggle( 'invisible' )
         })    
