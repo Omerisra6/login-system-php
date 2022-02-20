@@ -30,7 +30,7 @@
                     <th> USER`S IP </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="logged-users-table-body">
                 <tr>
                     <td> Omer </td>
                     <td> 2022-02-17 11:26:50 </td>
@@ -42,4 +42,5 @@
     </div>
     
 </body>
+<script type="text/javascript" src="./index.js"></script>
 </html>
