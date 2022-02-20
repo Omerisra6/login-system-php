@@ -31,8 +31,8 @@ body{
 }
 
 table{
-    border-collapse: collapse; 
-    border-spacing: 1vh;
+    border-collapse:separate;
+    border-spacing:0 5px;
 }
 
 th{
@@ -114,7 +114,7 @@ th:last-child {
     gap: 4vh;
 }
 
-.close-pop{
+.close-user-details-pop{
     color: #ffff;
     margin-left: auto;    
     cursor: pointer;
