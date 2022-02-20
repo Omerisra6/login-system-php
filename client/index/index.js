@@ -115,11 +115,6 @@ const appendUserToPop = ( userDetails ) => {
 
         <div class="user-detail">
             <h5> Register Time</h5>
-            <h3> ${ userDetails[ 0 ] } </h3>
-        </div>
-
-        <div class="user-detail">
-            <h5> Register Time</h5>
             <h3> ${ userDetails[ 7 ] } </h3>
         </div>
 
