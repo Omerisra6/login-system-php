@@ -39,6 +39,17 @@
             </tbody>
         </table>
     </div>
+
+    <div class="user-details-pop-wrapper invisible">
+        <div class="user-details-pop-container">
+            <i class="fa fa-close close-user-details-pop"></i>    
+            <div class="logged-user-details-container">
+
+                
+
+            </div>
+        </div>
+    </div>
     
 </body>
 <script type="text/javascript" src="./index.js"></script>

@@ -21,6 +21,7 @@ body{
     flex-direction: column;
     gap: 2vh;
     position: absolute;
+    border-radius: 3px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -81,4 +82,58 @@ th:last-child {
     border-radius: 4px;
     cursor: pointer;
     color: white;
+}
+
+.user-details-pop-wrapper{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.user-details-pop-container{
+    min-width: 190px;
+    min-height: 250px;
+    width: 40vw;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    padding: 2vh 1vw;
+    border-radius: 3px;
+    background-color: #2C3456;
+    text-align: center;
+}
+
+.logged-user-details-container{
+    display: flex;
+    flex-direction: column;
+    gap: 4vh;
+}
+
+.close-pop{
+    color: #ffff;
+    margin-left: auto;    
+    cursor: pointer;
+}
+
+.user-detail > h5 {
+    color: #8D98BD;
+    font-size: 2vh;
+}
+
+.user-detail > h3 {
+    color: #EDF0F8;
+    font-size: 3vh;
+}
+
+.pop-title {
+    color: #ffff;
+}
+
+.invisible{
+    display: none;
 }
