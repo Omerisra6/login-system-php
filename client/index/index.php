@@ -18,7 +18,12 @@
 </head>
 <body>
     <div class="logged-users-table-wrapper">
-        <h1> Welcome <?= $username ?></h1>
+
+        <div class="index-top">
+            <h1> Welcome <?= $username ?></h1>
+            <button class="logout-button">Logout</button>
+        </div>
+
         <h3> <i class="fa fa-users"></i> Logged Users Table </h3>
 
         <table>

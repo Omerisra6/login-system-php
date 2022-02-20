@@ -1,7 +1,12 @@
 const loggedUsersTable = document.querySelector( '.logged-users-table-body' )
+const logOutButton     = document.querySelector( '.logout-button' )
+
+logOutButton.addEventListener( 'click', async () => {
+    await logOutUser()
+})
 
 const getUsersInterval = window.setInterval( async () => {
-    
+
     await getLoggedUsers()
 
 }, 3000 );
@@ -17,9 +22,10 @@ const getLoggedUsers = async () => {
     })
     .catch( ( ) => {
         
-        //Handles wrong session passed
-        alert( 'Error: You are not logged in' )
-        return
+        //On error ( user not logged ) redirect to login page
+        alert( 'Error: You are not logged in, please login again' )
+        window.location = 'http://localhost:8000/client/forms/login.html' 
+        
 
     })
 }
@@ -43,4 +49,16 @@ const appendLoggedUser = ( user ) => {
             <td> ${ user[ 2 ] } </td>
         </tr>
     `
+}
+
+const logOutUser =  async () => {
+   
+    await fetch( 'http://localhost:8000/server/logout_user.php', {
+        method: 'GET'
+    }).then( () => {
+
+        //Redirecting to login page
+        window.location = 'http://localhost:8000/client/forms/login.html'
+        
+    })
 }
