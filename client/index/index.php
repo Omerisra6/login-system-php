@@ -31,12 +31,6 @@
                 </tr>
             </thead>
             <tbody class="logged-users-table-body">
-                <tr>
-                    <td> Omer </td>
-                    <td> 2022-02-17 11:26:50 </td>
-                    <td> 2022-02-17 11:26:50 </td>
-                    <td> 127.0.1.1</td>
-                </tr>
             </tbody>
         </table>
     </div>
