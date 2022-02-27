@@ -28,7 +28,7 @@ const renderLoggedUsers = ( users ) => {
     loggedUsersTable.innerHTML = ''
 
     usersWithoutCurrent.forEach( user => {
-        renderLoggedUser( user)
+        renderLoggedUser( user )
     });
 
     attachListenersToUsers( )
@@ -142,7 +142,7 @@ const logOutUser =  async () => {
     })
 }
 
-const _ = ( selector ) => {
+function _ ( selector ){
 
     return document.querySelector( selector )
 }
