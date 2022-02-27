@@ -19,27 +19,7 @@ closeUserDetailsPop.addEventListener( 'click', () => {
     loggedUserDetailsPopWrapper.classList.toggle( 'invisible' )
 })
 
-const getLoggedUsers =  async () => {
-
-    await fetch( '/server/get_logged_users.php', {
-        method: 'GET'
-    })
-    .then( ( res ) => res.json())
-    .then( async ( data ) => {
-
-        appendLoggedUsers( data )
-    })
-    .catch( ( error ) => {
-        
-        //On error ( user not logged ) redirect to login page
-        alert( 'Error: You are not logged in, please login again' )
-        window.location = '/client/forms/login.html' 
-        
-
-    })
-}
-
-const appendLoggedUsers = ( users ) => {
+const renderLoggedUsers = ( users ) => {
 
     const usersWithoutCurrent = users.filter( user => {
         return user[ 'username' ] !== currentUsername
@@ -48,14 +28,14 @@ const appendLoggedUsers = ( users ) => {
     loggedUsersTable.innerHTML = ''
 
     usersWithoutCurrent.forEach( user => {
-        appendLoggedUser( user)
+        renderLoggedUser( user)
     });
 
     attachListenersToUsers( )
 
 }
 
-const appendLoggedUser = ( user ) => {
+const renderLoggedUser = ( user ) => {
 
     loggedUsersTable.innerHTML += `
         <tr class="logged-user" data-id=${ user[ 'id' ] }>
@@ -67,7 +47,7 @@ const appendLoggedUser = ( user ) => {
     `
 }
 
-const appendUserToPop = ( userDetails ) => {
+const renderUserToPop = ( userDetails ) => {
 
     loggedUserDetailsContainer.innerHTML = 
     `
@@ -91,6 +71,26 @@ const appendUserToPop = ( userDetails ) => {
     `
 }
 
+const getLoggedUsers =  async () => {
+
+    await fetch( '/server/get_logged_users.php', {
+        method: 'GET'
+    })
+    .then( ( res ) => res.json())
+    .then( async ( data ) => {
+
+        renderLoggedUsers( data )
+    })
+    .catch( ( error ) => {
+        
+        //On error ( user not logged ) redirect to login page
+        alert( 'Error: You are not logged in, please login again' )
+        window.location = '/client/forms/login.html' 
+        
+
+    })
+}
+
 const attachListenersToUsers = async() => {
 
     const loggedUsers = document.querySelectorAll( '.logged-user' )
@@ -100,7 +100,7 @@ const attachListenersToUsers = async() => {
         user.addEventListener( 'click', async () => {
             const id    = user.dataset.id
             const userDetails = await getUser( id )
-            appendUserToPop( userDetails )
+            renderUserToPop( userDetails )
             loggedUserDetailsPopWrapper.classList.toggle( 'invisible' )
         })    
  
