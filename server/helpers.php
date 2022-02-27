@@ -13,7 +13,7 @@
             exit();
         }
     
-        if ( isUserExists( $username) ) {
+        if (  DB::table( 'users' )->where( 'username', $username ) ) {
             header("HTTP/1.1 409 username is taken");
             exit();
         }
@@ -30,26 +30,13 @@
         }
     
     
-        if ( ! isUserExists( $username) ) {
-            header("HTTP/1.1 404 username can`t be found");
+        if ( ! DB::table( 'users' )->where( 'username', $username ) ) {
+            header("HTTP/1.1 404 username does not exists");
             exit();
         }
 
 
     }
-
-    //Returns path by username
-    function getUserDetailsPath( $username ){
-        return "./users/" . $username . ".csv";
-    }
-
-    //Checks if a user exists
-    function isUserExists( $username ){
-
-        $userDetailsPath =  getUserDetailsPath( $username );
-        return file_exists( realpath( $userDetailsPath ) ) ;
-    }
-
     
 
 

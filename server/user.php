@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+
     require_once(  __DIR__ . '/helpers.php');
     require_once( __DIR__ . '/db_functions.php');
 
@@ -8,8 +10,6 @@
     header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
-    session_start();
 
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method === "OPTIONS"){
@@ -33,7 +33,7 @@
 
         //Successfull signup
         header("HTTP/1.1 200 Signed up sucsessfully");
-        header("Location: http://localhost:8000/client/index/index.php");
+        header("Location: /client/index/index.php");
         exit();
         
     }
@@ -49,10 +49,8 @@
 
         //Success
         header("HTTP/1.1 200 User logged in sucsessfully");
-        header("Location: http://localhost:8000/client/index/index.php");
+        header("Location: /client/index/index.php");
         exit();
     }
-
-
-
+    
 ?>

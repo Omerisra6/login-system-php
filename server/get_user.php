@@ -21,17 +21,15 @@
     }
 
 
-    if ( ! isset( $_SESSION['username'] ) ) {
+    if ( ! isset( $_SESSION[ 'id' ] ) ) {
         header("HTTP/1.1 400 User must be logged in");
         exit();
     }
 
     //Gets the user from request username
-    $user = getUser( $_GET[ 'username' ] );
-    unset( $user[ 1 ] );
+    $user = DB::table( 'users' )->get( $_GET[ 'id' ] );
+    unset( $user[ 'hashed_password' ] );
 
     header( "HTTP/1.1 200 user returned successfully" );
     echo( json_encode( $user ) );
     exit();
-
-?>

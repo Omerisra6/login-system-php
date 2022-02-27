@@ -1,44 +1,40 @@
 <?php
+    require_once( './db_class.php' );
 
-    //Creats csv file for user`s details
+    //Creates csv file for user`s details
     function addUser( $username, $password ){
-
-        $user_details_path = getUserDetailsPath( $username );
-        $handle = fopen( $user_details_path, 'w');
         
         $hashed_password = password_hash( $password, PASSWORD_DEFAULT);
         $login_count     = 0;
         $ip              = $_SERVER['REMOTE_ADDR'];
         $user_agent      = $_SERVER['HTTP_USER_AGENT'];
-        $last_action     = date("Y-m-d H:i:s");     
-        $last_login      = date("Y-m-d H:i:s");  
-        $register_time   = date("Y-m-d H:i:s");  
+        $now             = date('Y-m-d H:i:s');     
+      
         
-        $user = [ 
-            $username, $hashed_password, 
-            $login_count, $ip, 
-            $user_agent, $last_action,
-            $last_login, $register_time
-        ];
+        $user = array(
+            'username' => $username, 'hashed_password' => $hashed_password,
+            'login_count' => $login_count, 'ip' => $ip, 'user_agent' => $user_agent, 
+            'last_action' => time(), 'last_login' => $now, 'register_time' => $now
+        ); 
+        
+        $user_details  = DB::table( 'users' )->insert( $user );
 
-        fputcsv( $handle, $user, ','); 
-        fclose( $handle );
-
+        $_SESSION[ 'id' ]       = $user_details[ 'id' ];
         $_SESSION[ 'username' ] = $username;
     }
 
-    function loginUser( $username, $password){
+    function loginUser( $username, $password ){
 
-        $user_details = getUser( $username );
-
-        if ( ! password_verify( $password, $user_details[ 1 ] ) ){
+        $user_details = DB::table( 'users' )->where( 'username', $username );
+        if ( ! password_verify( $password, $user_details[ 0 ][ 'hashed_password' ] ) ){
             header("HTTP/1.1 400 Wrong password");
             exit();       
         }
 
         //Updates the user data on login
-        updateUser( $username );
+        updateUser( $user_details[ 0 ][ 'id' ] );
 
+        $_SESSION[ 'id' ] = $user_details[ 0 ][ 'id' ];
         $_SESSION[ 'username' ] = $username;
     }
 
@@ -54,108 +50,55 @@
     //Returns all logged users
     function getLoggedUsers(){
 
-        $loggedUsers = array();
+        
+        //Adds only user which was active in the last three minutes
+        $loggedCondition = array( 'key' => 'last_action', 'operator' => '>', 'compared_value' => time() - 180 );
+        $loggedUsers = DB::table( 'users' )->whereCondition( $loggedCondition );
 
-        $usersFolder =  preg_grep('/^([^.])/', scandir( __DIR__  . '/users' ));
+        //Updates logged user
+        updateUser();
 
-        foreach ( $usersFolder  as $userFile ) {
-            
-            $user_details = getUserFromFile(  __DIR__ . '/users/' . $userFile );
+        //Removes password from user
+        foreach( $loggedUsers as $index => $user ){
+            unset( $loggedUsers[ $index ][ 'hashed_password' ] );
 
-            //Skips offline users
-            if ( $user_details[ 5 ] === 'offline') {
-                continue;
-            }
-
-            //Updates the current user
-            $username = $user_details[ 0 ];
-            if ( $_SESSION[ 'username' ] === $username ) {
-                updateUser();
-                continue;
-            }
-
-            //Removes password from user
-            unset( $user_details[ 1 ] );
-
-            //Adds only user which was active in the last three minutes
-            $lastTimeActive = strtotime( $user_details[ 5 ] );
-            $minutes = 3;
-            if ( time() - $lastTimeActive  <  $minutes * 60 ){
-                array_push( $loggedUsers, $user_details );
-
-            }
-            
         }
 
-        return  $loggedUsers;
+        return $loggedUsers;
 
-    }
-
-    //Gets user details from username
-    function getUser( $username ){
-        $user_details_path =  getUserDetailsPath( $username );
-        
-        return getUserFromFile( $user_details_path );
-    }
-
-    //Returns user details by file path
-    function getUserFromFile( $file_path ){
-
-        $handle = fopen( $file_path, 'r' );
-
-        $user_details = fgetcsv( $handle ) ;
-        fclose( $handle );
-
-        return $user_details;
     }
 
     //Updates the user details on request
-    function updateUser( $current_username = null ){
+    function updateUser( $current_id = null ){
 
         //Sets username if it not passed
-        if (! isset( $current_username ) ) {
-            $current_username = $_SESSION[ 'username' ];
+        if ( ! isset( $current_id ) ) {
+            $current_id = $_SESSION[ 'id' ];
         }
 
-        $user_details = getUser( $current_username );
-
+        $user_details = DB::table( 'users' )->get( $current_id );
 
         //if it is user login request increase login count and last login time
-        if ( ! isset( $_SESSION[ 'username' ] ) ) {
-            $user_details [ 2 ] = (int)$user_details[ 2 ] + 1;
-            $user_details [ 6 ] =  date("Y-m-d H:i:s"); 
+        if ( ! isset( $_SESSION[ 'id' ] ) ) {
+            $user_details[ 'login_count' ] = (int)$user_details[ 'login_count' ] + 1;
+            $user_details[ 'last_login' ] =  date("Y-m-d H:i:s"); 
         }
 
-        $user_details [ 3 ] = $_SERVER['REMOTE_ADDR'];
-        $user_details [ 4 ] = $_SERVER['HTTP_USER_AGENT'];
-        $user_details [ 5 ] = date("Y-m-d H:i:s");     
+        $user_details[ 'ip' ] = $_SERVER['REMOTE_ADDR'];
+        $user_details[ 'user_agent' ] = $_SERVER['HTTP_USER_AGENT'];
+        $user_details[ 'last_action' ] = time();
 
-        putUserDetials( $current_username, $user_details );
+        DB::table( 'users' )->update( $current_id, $user_details );
 
-        
-    }
-
-    //Replace old user data in new data
-    function putUserDetials( $username, $new_user){
-
-        $user_details_path =  getUserDetailsPath( $username );
-
-        $handle = fopen( $user_details_path, 'a+' );
-        file_put_contents( $user_details_path, "" );
-        fputcsv( $handle, $new_user, ','); 
-
-        fclose( $handle );
     }
 
     //Marks user as offline in csv file
     function markUserOffline(){
 
-        $username = $_SESSION[ 'username' ];
-        $user_details =  getUser( $username );
+        $id = $_SESSION[ 'id' ];
+        $user_details =  DB::table( 'users' )->get( $id );
 
-        $user_details[ 5 ] = 'offline';
-        putUserDetials( $username, $user_details );
-
+        $user_details[ 'last_action' ] = 'offline';
+        DB::table( 'users' )->update( $id, $user_details);
     }
 
-?>

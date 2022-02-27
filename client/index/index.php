@@ -1,10 +1,12 @@
 <?php
     session_start(); 
-    $username = $_SESSION['username']; 
+    $id       = $_SESSION[ 'id' ]; 
+    $username = $_SESSION[ 'username' ]; 
 
-    if ( ! isset( $username ) ) {
-        header("Location: http://localhost:8000/client/forms/login.html");
+    if ( ! isset( $id ) ) {
+        header("Location: /client/forms/login.html");
     }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +22,7 @@
     <div class="logged-users-table-wrapper">
 
         <div class="index-top">
-            <h1> Welcome <?= $username ?></h1>
+            <h1 class="welcome-text" data-username=<?= $username ?>> Welcome <?= $username ?></h1>
             <button class="logout-button">Logout</button>
         </div>
 
