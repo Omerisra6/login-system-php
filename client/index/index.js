@@ -9,25 +9,26 @@ logOutButton.addEventListener( 'click', async () => {
     await logOutUser()
 })
 
-const getUsersInterval = window.setInterval( async () => {
-
-    await getLoggedUsers()
-
-}, 3000 );
+window.addEventListener( 'load', () => {
+    getLoggedUsers();
+    setInterval( getLoggedUsers, 3000 );
+} )
 
 closeUserDetailsPop.addEventListener( 'click', () => {
     loggedUserDetailsPopWrapper.classList.toggle( 'invisible' )
 })
 
-const renderLoggedUsers = ( users ) => {
+loggedUserDetailsPopWrapper.addEventListener( 'click', () => {
 
-    const usersWithoutCurrent = users.filter( user => {
-        return user[ 'username' ] !== currentUsername
-    })
+    loggedUserDetailsPopWrapper.classList.toggle( 'invisible' )
+
+})
+
+const renderLoggedUsers = ( users ) => {
 
     loggedUsersTable.innerHTML = ''
 
-    usersWithoutCurrent.forEach( user => {
+    users.forEach( user => {
         renderLoggedUser( user )
     });
 
@@ -41,7 +42,7 @@ const renderLoggedUser = ( user ) => {
         <tr class="logged-user" data-id=${ user[ 'id' ] }>
             <td> ${ user[ 'username' ] } </td>
             <td> ${ user[ 'last_login' ] } </td>
-            <td> ${ new Date( user[ 'last_action' ] ) } </td>
+            <td> ${ ( new Date( user[ 'last_action' ] * 1000 ) ).toLocaleString() } </td>
             <td> ${ user[ 'ip' ] } </td>
         </tr>
     `
@@ -51,7 +52,7 @@ const renderUserToPop = ( userDetails ) => {
 
     loggedUserDetailsContainer.innerHTML = 
     `
-        <h2 class="pop-title"> ${ userDetails[ 'username' ] }\`s details </h2>
+        <h2 class="pop-title"> ${ userDetails[ 'username' ] }'s details </h2>
 
         <div class="user-detail">
             <h5> User Agent </h5>
@@ -69,6 +70,23 @@ const renderUserToPop = ( userDetails ) => {
         </div>
         
     `
+}
+
+const attachListenersToUsers = async() => {
+
+    const loggedUsers = document.querySelectorAll( '.logged-user' )
+
+    loggedUsers.forEach( user => {
+
+        user.addEventListener( 'click', async () => {
+            const id    = user.dataset.id
+            const userDetails = await getUser( id )
+            renderUserToPop( userDetails )
+            loggedUserDetailsPopWrapper.classList.toggle( 'invisible' )
+        })    
+ 
+    });
+
 }
 
 const getLoggedUsers =  async () => {
@@ -89,23 +107,6 @@ const getLoggedUsers =  async () => {
         
 
     })
-}
-
-const attachListenersToUsers = async() => {
-
-    const loggedUsers = document.querySelectorAll( '.logged-user' )
-
-    loggedUsers.forEach( user => {
-
-        user.addEventListener( 'click', async () => {
-            const id    = user.dataset.id
-            const userDetails = await getUser( id )
-            renderUserToPop( userDetails )
-            loggedUserDetailsPopWrapper.classList.toggle( 'invisible' )
-        })    
- 
-    });
-
 }
 
 const getUser = async ( id ) => {
