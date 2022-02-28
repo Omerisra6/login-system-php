@@ -12,7 +12,7 @@
 
             //Creates file if don't exists and adds empty array
             if ( ! file_exists( $filePath ) ) {
-                file_put_contents( $filePath, json_encode( [] ) );
+                $this->writeFile( [] );
             }
 
             $this->dataFile = $filePath;
@@ -33,12 +33,12 @@
             $item[ 'time_updated'] = time();
 
 
-            $inp = file_get_contents( $this->dataFile );
-            $data = json_decode( $inp, true );
+            
+            $data = $this->readFile();
 
             array_push( $data, $item );
 
-            file_put_contents( $this->dataFile, json_encode( $data ) );
+            $this->writeFile( $data );
 
             return $item;
         }
@@ -46,8 +46,7 @@
         //Returns all items that 
         public function where( $key, $value ){
 
-            $inp = file_get_contents( $this->dataFile );
-            $data = json_decode( $inp, true );
+            $data = $this->readFile();
 
             $results = array_filter( $data, function( $item ) use ( $key, $value ){
 
@@ -60,8 +59,8 @@
         //Returns all items where the key fits the value
         public function whereCondition( $condition ){
 
-            $inp = file_get_contents( $this->dataFile );
-            $data = json_decode( $inp, true );
+            
+            $data = $this->readFile();
 
             $results = array_filter( $data, function( $item ) use ( $condition ){
     
@@ -96,11 +95,12 @@
                 return null;
             }
 
-            $inp = file_get_contents( $this->dataFile );
-            $data = json_decode( $inp, true );
+            
+            $data = $this->readFile();
 
             unset( $data[ $index ] );
-            file_put_contents( $this->dataFile, json_encode( $data ) );
+
+            $this->writeFile( $data );
 
             return $item;
         } 
@@ -122,13 +122,13 @@
                 return null;
             }   
 
-            $inp = file_get_contents( $this->dataFile );
-            $data = json_decode( $inp, true );
+            $data = $this->readFile();
 
             $updatedItem[ 'time_updated' ] = time();
 
             $data[ $index ] = array_merge( $item, $updatedItem );
-            file_put_contents( $this->dataFile, json_encode( $data ) );
+
+            $this->writeFile( $data );
 
             return $id;
         }
@@ -136,8 +136,8 @@
         //Returns item and item's index
         private function getItem( $id ){
 
-            $inp = file_get_contents( $this->dataFile );
-            $data = json_decode( $inp, true );
+            
+            $data = $this->readFile();
 
             foreach ( $data as $index => $item ){
                 if ( $item[ 'id' ] === $id ) {
@@ -148,4 +148,16 @@
             return null;
         }
 
+        private function readFile(){
+
+            $file = file_get_contents( $this->dataFile );
+            return json_decode( $file, true );
+        }
+
+        private function writeFile( $data ){
+
+            file_put_contents( $this->dataFile, json_encode( $data ) );
+        }
+
     }
+
