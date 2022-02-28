@@ -28,6 +28,7 @@
         $user_details = DB::table( 'users' )->where( 'username', $username );
         if ( ! password_verify( $password, $user_details[ 0 ][ 'hashed_password' ] ) ){
             header("HTTP/1.1 400 Wrong password");
+            header("Location: /client/forms/login.html");
             exit();       
         }
 
