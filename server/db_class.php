@@ -4,7 +4,6 @@
 
         private const DB_DIR = __DIR__ . '/DB';
         private $dataFile;        
-        private $instance;
 
         //Constructs new instance and sets the data file
         private function __construct( $tableName ){
@@ -43,39 +42,37 @@
             return $item;
         }
 
-        //Returns all items that 
-        public function where( $key, $value ){
+        //Returns all items that fits the condition 
+        public function where( $key, $operator = null, $value ){
 
             $data = $this->readFile();
 
-            $results = array_filter( $data, function( $item ) use ( $key, $value ){
+            if ( ! isset( $operator ) ){
 
-                return $item[ $key ] === $value;
-            });
 
-            return array_values( $results );
-        }
-
-        //Returns all items where the key fits the value
-        public function whereCondition( $condition ){
-
-            
-            $data = $this->readFile();
-
-            $results = array_filter( $data, function( $item ) use ( $condition ){
+                $results = array_filter( $data, function( $item ) use ( $key, $value ){
     
-                switch ( $condition[ 'operator' ] ) {
+                    return $item[ $key ] === $value;
+                });
+    
+                return array_values( $results );
+
+            }
+
+            $results = array_filter( $data, function( $item ) use ( $operator, $key, $value ){
+
+                switch (  $operator ) {
                     case '>':
-                        return (int)$item[ $condition[ 'key'] ] > $condition[ 'compared_value' ];
+                        return (int)$item[  $key ] >  $value;
 
                     case '<':
-                        return (int)$item[ $condition[ 'key'] ] < $condition[ 'compared_value' ];
+                        return (int)$item[  $key ] <  $value;
 
                     case '===':
-                        return (int)$item[ $condition[ 'key'] ] === $condition[ 'compared_value' ];
+                        return (int)$item[  $key ] ===  $value;
 
                     case '!==':
-                        return (int)$item[ $condition[ 'key'] ] !== $condition[ 'compared_value' ];
+                        return (int)$item[  $key ] !==  $value;
 
                     default:
                         throw new InvalidArgumentException( 'Invalid operator' );
@@ -84,7 +81,7 @@
             });
 
             return array_values( $results );
-
+          
         }
 
         //Deletes item by id

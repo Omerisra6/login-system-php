@@ -15,7 +15,7 @@
             exit();
         }
     
-        if (  DB::table( 'users' )->where( 'username', $username ) ) {
+        if (  DB::table( 'users' )->where( 'username', null , $username ) ) {
             header("HTTP/1.1 409 username is taken");
             header("Location: /client/forms/signup.html");
             exit();
@@ -34,7 +34,7 @@
         }
     
     
-        if ( ! DB::table( 'users' )->where( 'username', $username ) ) {
+        if ( ! DB::table( 'users' )->where( 'username', null, $username ) ) {
             header("HTTP/1.1 404 username does not exists");
             header("Location: /client/forms/login.html");
             exit();
