@@ -1,21 +1,9 @@
 const getLoggedUsers =  async () => {
-
-    await fetch( '/server/get_logged_users.php', {
+    
+    return await fetch( '/server/get_logged_users.php', {
         method: 'GET'
-    })
-    .then( ( res ) => res.json())
-    .then( async ( data ) => {
+    }).then( res => res.json() )
 
-        renderLoggedUsers( data )
-    })
-    .catch( ( error ) => {
-        
-        //On error ( user not logged ) redirect to login page
-        alert( 'Error: You are not logged in, please login again' )
-        window.location = '/client/forms/login.html' 
-        
-
-    })
 }
 
 const getUser = async ( id ) => {

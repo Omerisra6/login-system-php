@@ -1,23 +1,19 @@
-import { getLoggedUsers, logOutUser, getUser  } from "../api"
+import { getLoggedUsers, logOutUser, getUser  } from "../api.js"
 const loggedUsersTable            = _( '.logged-users-table-body' )
 const logOutButton                = _( '.logout-button' )
 const loggedUserDetailsPopWrapper = _( '.user-details-pop-wrapper' )  
 const loggedUserDetailsContainer  = _( '.logged-user-details-container' )
-const closeUserDetailsPop         = _( '.close-user-details-pop' )
-const currentUsername             = _( '.welcome-text' ).dataset.username
 
 logOutButton.addEventListener( 'click', async () => {
     await logOutUser()
 })
 
-window.addEventListener( 'load', () => {
-    getLoggedUsers();
-    setInterval( getLoggedUsers, 3000 );
+window.addEventListener( 'load', async () => {
+    renderLoggedUsers( await getLoggedUsers() )
 } )
 
-closeUserDetailsPop.addEventListener( 'click', () => {
-    loggedUserDetailsPopWrapper.classList.toggle( 'invisible' )
-})
+setInterval(  renderLoggedUsers( await getLoggedUsers() ), 3000 )
+
 
 loggedUserDetailsPopWrapper.addEventListener( 'click', () => {
 
@@ -25,7 +21,7 @@ loggedUserDetailsPopWrapper.addEventListener( 'click', () => {
 
 })
 
-const renderLoggedUsers = ( users ) => {
+function renderLoggedUsers( users ){
 
     loggedUsersTable.innerHTML = ''
 
@@ -37,7 +33,7 @@ const renderLoggedUsers = ( users ) => {
 
 }
 
-const renderLoggedUser = ( user ) => {
+function renderLoggedUser( user ){
 
     loggedUsersTable.innerHTML += `
         <tr class="logged-user" data-id=${ user[ 'id' ] }>
@@ -73,7 +69,7 @@ const renderUserToPop = ( userDetails ) => {
     `
 }
 
-const attachListenersToUsers = async() => {
+async function attachListenersToUsers(){
 
     const loggedUsers = document.querySelectorAll( '.logged-user' )
 
