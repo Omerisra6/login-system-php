@@ -38,11 +38,13 @@ function renderLoggedUsers( users ){
 
 function renderLoggedUser( user ){
 
+    const date = ( new Date( user[ 'last_action' ] * 1000 ) ).toLocaleString().replaceAll( '/', '-' )
+
     loggedUsersTable.innerHTML += `
         <tr class="logged-user" data-id=${ user[ 'id' ] }>
             <td> ${ user[ 'username' ] } </td>
             <td> ${ user[ 'last_login' ] } </td>
-            <td> ${ ( new Date( user[ 'last_action' ] * 1000 ) ).toLocaleString() } </td>
+            <td> ${ date  } </td>
             <td> ${ user[ 'ip' ] } </td>
         </tr>
     `
