@@ -114,11 +114,6 @@ th:last-child {
     gap: 4vh;
 }
 
-.close-user-details-pop{
-    color: #ffff;
-    margin-left: auto;    
-    cursor: pointer;
-}
 
 .user-detail > h5 {
     color: #8D98BD;
