@@ -1,18 +1,18 @@
 <?php
-    class DB{
 
-        private const db = __DIR__ . '\DB';
+    class DB {
+
+        private const DB_DIR = __DIR__ . '/DB';
         private $dataFile;        
+        private $instance;
 
         //Constructs new instance and sets the data file
         private function __construct( $tableName ){
-            $filePath = self::db . '/' . $tableName . '.json';
+            $filePath = static::DB_DIR . '/' . $tableName . '.json';
 
             //Creates file if don't exists and adds empty array
             if ( ! file_exists( $filePath ) ) {
-                fopen( $filePath, 'w' );
-                $data = [];
-                file_put_contents( $filePath, json_encode( $data ) );
+                file_put_contents( $filePath, json_encode( [] ) );
             }
 
             $this->dataFile = $filePath;
@@ -22,7 +22,7 @@
         //Returns new instance by usimg the constructor and specify table name
         static function table( $tableName ){
 
-            return new self( $tableName );
+            return new static( $tableName );
         }
         
         //Inserts new item to table
@@ -35,7 +35,9 @@
 
             $inp = file_get_contents( $this->dataFile );
             $data = json_decode( $inp, true );
+
             array_push( $data, $item );
+
             file_put_contents( $this->dataFile, json_encode( $data ) );
 
             return $item;
@@ -66,19 +68,18 @@
                 switch ( $condition[ 'operator' ] ) {
                     case '>':
                         return (int)$item[ $condition[ 'key'] ] > $condition[ 'compared_value' ];
-                        break;
 
                     case '<':
                         return (int)$item[ $condition[ 'key'] ] < $condition[ 'compared_value' ];
-                        break;
 
                     case '===':
                         return (int)$item[ $condition[ 'key'] ] === $condition[ 'compared_value' ];
-                        break;
 
                     case '!==':
                         return (int)$item[ $condition[ 'key'] ] !== $condition[ 'compared_value' ];
-                        break;
+
+                    default:
+                        throw new InvalidArgumentException( 'Invalid operator' );
                 }                   
 
             });
