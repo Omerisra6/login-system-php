@@ -1,4 +1,5 @@
 import { getLoggedUsers, logOutUser, getUser  } from "../api.js"
+import { _ } from "../utils.js"
 const loggedUsersTable            = _( '.logged-users-table-body' )
 const logOutButton                = _( '.logout-button' )
 const loggedUserDetailsPopWrapper = _( '.user-details-pop-wrapper' )  
@@ -12,7 +13,9 @@ window.addEventListener( 'load', async () => {
     renderLoggedUsers( await getLoggedUsers() )
 } )
 
-setInterval(  renderLoggedUsers( await getLoggedUsers() ), 3000 )
+window.setInterval( async () => {
+    renderLoggedUsers( await getLoggedUsers() )  
+}, 3000);
 
 
 loggedUserDetailsPopWrapper.addEventListener( 'click', () => {
@@ -84,9 +87,4 @@ async function attachListenersToUsers(){
  
     });
 
-}
-
-function _ ( selector ){
-
-    return document.querySelector( selector )
 }
