@@ -1,5 +1,5 @@
-import { getLoggedUsers, logOutUser, getUser  } from "../api.js"
-import { _ } from "../utils.js"
+import { getLoggedUsers, logOutUser, getUser  } from "./utils/api.js"
+import { _ } from "./utils/helpers.js"
 const loggedUsersTable            = _( '.logged-users-table-body' )
 const logOutButton                = _( '.logout-button' )
 const loggedUserDetailsPopWrapper = _( '.user-details-pop-wrapper' )  

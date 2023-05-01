@@ -1,6 +1,7 @@
+export const serevrURL = 'http://localhost:5555'
 const getLoggedUsers =  async () => {
     
-    return await fetch( '/server/get_logged_users.php', {
+    return await fetch( serevrURL + '/get_logged_users.php', {
         method: 'GET'
     }).then( res => res.json() )
 
@@ -10,7 +11,7 @@ const getUser = async ( id ) => {
 
     let userDetails
 
-    await fetch( `/server/get_user.php?id=${ id }`, {
+    await fetch( serevrURL + `/get_user.php?id=${ id }`, {
         method: 'GET'
     })
     .then( ( res ) => res.json())
@@ -21,7 +22,7 @@ const getUser = async ( id ) => {
         
         //On error ( user not logged ) redirect to login page
         alert( 'Error: You are not logged in, please login again' )
-        window.location = '/client/forms/login.html' 
+        window.location = '/login.html' 
         
     })
 
@@ -30,12 +31,11 @@ const getUser = async ( id ) => {
 
 const logOutUser =  async () => {
    
-    await fetch( '/server/logout_user.php', {
+    await fetch( serevrURL + '/user_routes.php', {
         method: 'GET'
     }).then( () => {
 
-        //Redirecting to login page
-        window.location = '/client/forms/login.html'
+        window.location = '/login.html'
         
     })
 }

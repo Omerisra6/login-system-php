@@ -1,12 +1,13 @@
 <?php
-    session_start(); 
-    $id       = $_SESSION[ 'id' ]; 
-    $username = $_SESSION[ 'username' ]; 
+    session_start();
 
-    if ( ! isset( $id ) ) {
-        header("Location: /client/forms/login.html");
+    if ( ! isset( $_SESSION[ 'id' ] ) ) 
+    {
+        header("Location: /login.html");
     }
 
+    $id       = $_SESSION[ 'id' ]; 
+    $username = $_SESSION[ 'username' ]; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./index.css"/>
+    <link rel="stylesheet" href="./styles/index.css"/>
     <script src="https://kit.fontawesome.com/ea6d546e2a.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
@@ -53,5 +54,5 @@
     </div>
     
 </body>
-<script type="module" src="./index.js"></script>
+<script type="module" src="./scripts/index.js"></script>
 </html>
