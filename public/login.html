@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/ea6d546e2a.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./styles/form.css">
+    <link rel="stylesheet" href="./public/styles/form.css">
     <title>Login</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
 
         <div class="black-circle"></div>
 
-        <form class="form-container" action="http://localhost:5555/user_routes.php" method="get">
+        <form class="form-container" action="/user/login" method="GET">
 
             <h1 class="title">Log in.</h1>
 
@@ -23,16 +23,17 @@
 
             <h3> or </h3>
 
-            <input type="text" class="form-input" placeholder="Username" name="username" id="username"/>
-            <input type="password" class="form-input" placeholder="Password" name="password" id="password"/>
+            <input type="text" class="form-input username-input" placeholder="Username" name="username" id="username"/>
+            <input type="password" class="form-input password-input" placeholder="Password" name="password" id="password"/>
 
-            <button class="form-sumbit-button" type="submit">Login</button>
+            <button class="form-sumbit-button login-form-sumbit-button" type="submit">Login</button>
 
-            <div>Dont have an account? <a href='./signup.html' class="text-action">Create account</span></a>
+            <div>Dont have an account? <a href='/signup' class="text-action">Create account</span></a>
 
 
         </form>
     
     </div>
 </body>
+<script type="module" src="./public/scripts/pages/login.js"></script>
 </html>

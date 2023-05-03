@@ -1,7 +1,7 @@
-export const serevrURL = 'http://localhost:5555'
+
 const getLoggedUsers =  async () => {
     
-    return await fetch( serevrURL + '/get_logged_users.php', {
+    return await fetch( '/user/get-logged', {
         method: 'GET'
     }).then( res => res.json() )
 
@@ -11,7 +11,7 @@ const getUser = async ( id ) => {
 
     let userDetails
 
-    await fetch( serevrURL + `/get_user.php?id=${ id }`, {
+    await fetch( `/user/get?id=${ id }`, {
         method: 'GET'
     })
     .then( ( res ) => res.json())
@@ -29,19 +29,28 @@ const getUser = async ( id ) => {
     return userDetails
 }
 
-const logOutUser =  async () => {
+const logOutUser = async () => {
    
-    await fetch( serevrURL + '/user_routes.php', {
+    await fetch( '/user/logout', {
         method: 'GET'
     }).then( () => {
 
-        window.location = '/login.html'
-        
+       
+        window.location.href = '/public/login.html'
     })
 }
+
+const loginUser = async ( username, password ) => {
+    
+
+    return await fetch( `/user/login?username=${ username }&password=${ password }`, {
+        method: 'GET'
+    })
+} 
 
 export{
     getLoggedUsers,
     getUser,
-    logOutUser
+    logOutUser,
+    loginUser
 }
