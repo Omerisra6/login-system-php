@@ -2,36 +2,32 @@
 
     class DB {
 
-        private const DB_DIR = __DIR__ . '/DB';
         private $dataFile;        
 
-        //Constructs new instance and sets the data file
-        private function __construct( $tableName ){
-            $filePath = static::DB_DIR . '/' . $tableName . '.json';
+        private function __construct( $tableName )
+        {
+            $filePath = DB_DIR . '/' . $tableName . '.json';
 
-            //Creates file if don't exists and adds empty array
-            if ( ! file_exists( $filePath ) ) {
+            if ( ! file_exists( $filePath ) ) 
+            {
                 $this->writeFile( [] );
             }
 
             $this->dataFile = $filePath;
-               
         }
 
         //Returns new instance by usimg the constructor and specify table name
-        static function table( $tableName ){
-
+        static function table( $tableName )
+        {
             return new static( $tableName );
         }
         
         //Inserts new item to table
-        public function insert( $item ){
-
+        public function insert( $item )
+        {
             $item[ 'id' ] = uniqid();
             $item[ 'time_created'] = time();
             $item[ 'time_updated'] = time();
-
-
             
             $data = $this->readFile();
 
@@ -43,24 +39,22 @@
         }
 
         //Returns all items that fits the condition 
-        public function where( $key, $operator = null, $value ){
-
+        public function where( $key, $operator = null, $value )
+        {
             $data = $this->readFile();
 
-            if ( ! isset( $operator ) ){
-
-
+            if ( ! isset( $operator ) )
+            {
                 $results = array_filter( $data, function( $item ) use ( $key, $value ){
     
                     return $item[ $key ] === $value;
                 });
     
                 return array_values( $results );
-
             }
 
-            $results = array_filter( $data, function( $item ) use ( $operator, $key, $value ){
-
+            $results = array_filter( $data, function( $item ) use ( $operator, $key, $value )
+            {
                 switch (  $operator ) {
                     case '>':
                         return (int)$item[  $key ] >  $value;
@@ -77,22 +71,19 @@
                     default:
                         throw new InvalidArgumentException( 'Invalid operator' );
                 }                   
-
             });
 
             return array_values( $results );
-          
         }
 
-        //Deletes item by id
-        public function delete( $id ){
-
+        public function delete( $id )
+        {
             [ $index, $item ] = $this->getItem( $id );
-            if ( ! isset( $index ) ){
+            if ( ! isset( $index ) )
+            {
                 return null;
             }
 
-            
             $data = $this->readFile();
 
             unset( $data[ $index ] );
@@ -102,20 +93,19 @@
             return $item;
         } 
 
-        //Returns item by id
-        public function get( $id ){
-
+        public function get( $id )
+        {
             [ $index, $item ] = $this->getItem( $id );
 
             return $item;
         }
 
-        //Updates item 
-        public function update( $id, $updatedItem ){
-
+        public function update( $id, $updatedItem )
+        {
             [ $index, $item ] = $this->getItem( $id );
 
-            if ( ! isset( $index ) ){
+            if ( ! isset( $index ) )
+            {
                 return null;
             }   
 
@@ -130,14 +120,15 @@
             return $id;
         }
 
-        //Returns item and item's index
-        private function getItem( $id ){
-
+        private function getItem( $id )
+        {
             
             $data = $this->readFile();
 
-            foreach ( $data as $index => $item ){
-                if ( $item[ 'id' ] === $id ) {
+            foreach ( $data as $index => $item )
+            {
+                if ( $item[ 'id' ] === $id ) 
+                {
                     return[ $index, $item];
                 }
             }
@@ -145,16 +136,15 @@
             return null;
         }
 
-        private function readFile(){
-
+        private function readFile()
+        {
             $file = file_get_contents( $this->dataFile );
             return json_decode( $file, true );
         }
 
-        private function writeFile( $data ){
-
+        private function writeFile( $data )
+        {
             file_put_contents( $this->dataFile, json_encode( $data ) );
         }
-
     }
 
