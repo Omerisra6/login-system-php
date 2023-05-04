@@ -68,8 +68,7 @@ class UserController
     {
         if( ! isset( $_SESSION[ 'id' ] ) )
         {
-            header("HTTP/1.1 400 User must be logged in");
-            exit();
+            ( new Response( 400, 'User is not logged in' ) )->send();
         }
     
         $loggedUsers = ( new UserService() )->getLoggedUsers();
