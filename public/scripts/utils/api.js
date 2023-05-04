@@ -1,56 +1,43 @@
+async function fetchWrapper( url, method = 'GET', body = null ) 
+{
+    const response = await fetch( url, {
+        method,
+        body    
+    });
 
-const getLoggedUsers =  async () => {
+    const json = await response.json();
+    return response.ok ? json : Promise.reject( json );
+}
+
+const getLoggedUsers = () => {
     
-    return await fetch( '/user/get-logged', {
-        method: 'GET'
-    }).then( res => res.json() )
-
+    return fetchWrapper( '/user/get-logged' )
 }
 
 const getUser = async ( id ) => {
 
-    let userDetails
-
-    await fetch( `/user/get?id=${ id }`, {
-        method: 'GET'
-    })
-    .then( ( res ) => res.json())
-    .then( data => {
-       userDetails = data
-    })
-    .catch( ( ) => {
-        
-        //On error ( user not logged ) redirect to login page
-        alert( 'Error: You are not logged in, please login again' )
-        window.location = '/login.html' 
-        
-    })
-
-    return userDetails
+    return fetchWrapper( `/user?id=${ id }` )
 }
 
-const logOutUser = async () => {
+const logOutUser = () => {
    
-    await fetch( '/user/logout', {
-        method: 'GET'
-    }).then( () => {
-
-       
-        window.location.href = '/public/login.html'
-    })
+    return fetchWrapper( '/user/logout' )
 }
 
-const loginUser = async ( username, password ) => {
-    
+const loginUser = ( username, password ) => {
 
-    return await fetch( `/user/login?username=${ username }&password=${ password }`, {
-        method: 'GET'
-    })
+    return fetchWrapper( `/user/login?username=${ username }&password=${ password }` )
+} 
+
+const signupUser = ( singupFormData ) => {
+
+    return fetchWrapper( '/user/signup', 'POST', singupFormData )
 } 
 
 export{
     getLoggedUsers,
     getUser,
     logOutUser,
-    loginUser
+    loginUser,
+    signupUser, 
 }
