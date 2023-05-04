@@ -17,7 +17,7 @@ loginFormSubmitButton.addEventListener( 'click', async ( e ) => {
 
     try {
         await loginUser( username, password )    
-       
+        window.location.href = '/'
     } catch ( error ) 
     {
         renderError( error )
