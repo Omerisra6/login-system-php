@@ -1,6 +1,12 @@
 <?php
-    require_once( './utils/DB.php' );
+namespace  app\services;
 
+use  app\utils\DB;
+use  app\utils\Response;
+
+
+class  UserService
+{
     function addUser( $username, $password )
     {    
         $hashed_password = password_hash( $password, PASSWORD_DEFAULT );
@@ -31,7 +37,7 @@
             ( new Response( 400, 'Wrong password' ) )->send();
         }
 
-        updateUser( $user_details[ 0 ][ 'id' ] );
+        $this->updateUser( $user_details[ 0 ][ 'id' ] );
 
         $_SESSION[ 'id' ] = $user_details[ 0 ][ 'id' ];
         $_SESSION[ 'username' ] = $username;
@@ -39,7 +45,7 @@
 
     function logOutUser()
     {
-        markUserOffline();
+        $this->markUserOffline();
 
         session_destroy();
     }
@@ -49,7 +55,7 @@
 
         $loggedUsers = DB::table( 'users' )->where( 'last_action', '>', time() - 180 );
 
-        updateUser();
+        $this->updateUser();
 
         foreach( $loggedUsers as $index => $user )
         {
@@ -60,7 +66,7 @@
     }
 
     
-    function updateUser( $current_id = null )
+    private function updateUser( $current_id = null )
     {
     
         if ( ! isset( $current_id ) ) 
@@ -85,11 +91,13 @@
     }
 
     //Marks user as offline in csv file
-    function markUserOffline()
+    private function markUserOffline()
     {
         $id = $_SESSION[ 'id' ];
         $user_details =  DB::table( 'users' )->get( $id );
 
         $user_details[ 'last_action' ] = 'offline';
         DB::table( 'users' )->update( $id, $user_details );
-    }
+    }    
+}
+    

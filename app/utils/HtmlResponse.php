@@ -1,4 +1,5 @@
 <?php
+namespace  app\utils;
 
 class HtmlResponse
 {

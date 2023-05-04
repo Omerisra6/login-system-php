@@ -1,16 +1,12 @@
 <?php
+namespace app\utils;
 
-require_once( __DIR__ . '\response\response.php' );
-require_once( __DIR__ . '\response\htmlResponse.php' );
+use app\utils\Response;
+use app\utils\HtmlResponse;
 
 class Router {
 
     private $routes = [];
-
-    public function __construct( $controllersPath )
-    {
-        $this->requireFolder( $controllersPath );
-    }
 
     public function addRoute($path, $handler) 
     {
@@ -58,27 +54,6 @@ class Router {
         $queryParams = $this->extractQueryParams( $path );
         $handler     = $this->routes[ $path ];
 
-        if ( is_callable( $handler ) ) 
-        {
-            $handler( $queryParams );
-            return;
-        } 
-
-        $parts      = explode( '@', $handler );
-        $class      = $parts[ 0 ];
-        $method     = $parts[ 1 ];
-        $controller = new $class();
-        $controller->$method( $queryParams );
-
-    }
-
-    private function requireFolder( $dir )
-    {
-        $files = glob( $dir . '/*.php' );
-
-        foreach ($files as $file) 
-        {
-            require($file);   
-        }
+        $handler( $queryParams );
     }
 }

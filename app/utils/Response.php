@@ -1,5 +1,7 @@
 <?php
 
+namespace  app\utils;
+
 class Response
 {
     private $statusCode;
