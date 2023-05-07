@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./public/styles/dashboard.css"/>
     <link rel="stylesheet" href="./public/styles/index.css"/>
     <script src="https://kit.fontawesome.com/ea6d546e2a.js" crossorigin="anonymous"></script>
     <title>Document</title>
@@ -16,7 +17,10 @@
             <button class="logout-button">Logout</button>
         </div>
 
-        <h3> <i class="fa fa-users"></i> Logged Users Table </h3>
+        <h3 class="table-title"> 
+            <i class="fa fa-users"></i> 
+            <span class="logges-users-text">Logged Users Table</span> 
+        </h3>
 
         <table>
             <thead>

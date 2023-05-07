@@ -1,7 +1,7 @@
 export const UserInPop = ( user ) =>{
     
     const userInPopElement         = document.createElement( 'div' )
-    userInPopElement.classList.add = 'logged-user'
+    userInPopElement.classList.add( 'logged-user' )
     userInPopElement.dataset.id    = user[ 'id' ]
 
     userInPopElement.innerHTML = 

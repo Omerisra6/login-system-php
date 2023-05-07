@@ -8,6 +8,8 @@
 body{
    background-color: #5C5C67; 
    font-family: Rubik;
+   width: 100vw;
+   height: 100vh;
 }
 
 *:focus {
@@ -46,11 +48,12 @@ body{
     text-align: center;
     justify-content: center;
     align-items: center;
+    font-size: var( --font-size-lg );
 }
 
 .title{
     color: #FFFFFF;
-    font-size: 3vw;
+    font-size: var( --font-size-xl );
 }
 
 .form-input{
@@ -63,32 +66,34 @@ body{
     padding: 1vh 1vw;
     background-color: #181820;
     color: #AEAEB0;
+    width: 30vw;
+    font-size: var( --font-size-md );
+    min-width: 200px;
 }
 
 .form-input::placeholder{
     color: #AEAEB0;
-
 }
 
 .providers{
     cursor: pointer;
-    gap: 0.8vw;
 }
 
 .providers > i{
     color: #ffff;
-    font-size: 1vw;
+    font-size: var( --font-size-sm );
+    padding-right: 1vw;
 }
 
 .form-sumbit-button{
-    width: 17vw;
+    width: 30vw;
     background: linear-gradient( to right top, #802698, #F288BF, #FBC092);
     border: none;
     padding: 1.5vh 1vw;
     border-radius: 4px;
     cursor: pointer;
     color: white;
-
+    min-width: 200px;
 }
 
 .text-action{
@@ -115,4 +120,31 @@ body{
     height: 110px;
     border-radius: 50%;
     background: linear-gradient( to right top, #802698, #F288BF, #FBC092);
+}
+
+.link-to{
+    font-size:var( --font-size-sm );
+}
+
+.or-text{
+    font-size: var( --font-size-lg );
+}
+
+.errors-container{
+    font-size: var( --font-size-md );
+}
+
+@media ( max-width: 600px ) {
+    .providers > i{
+       
+        padding-right: 10px;
+    }
+
+    .providers > h5{
+        font-size: var( --font-size-sm );
+    }
+
+    .or-text{
+        font-size: var( --font-size-md );
+    }
 }
