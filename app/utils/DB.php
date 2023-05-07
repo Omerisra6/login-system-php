@@ -32,7 +32,7 @@ class DB {
         $item[ 'time_created'] = time();
         $item[ 'time_updated'] = time();
         
-        $data = $this->readFile();
+        $data = $this->readFile() ?? [];
 
         array_push( $data, $item );
 
@@ -45,6 +45,11 @@ class DB {
     public function where( $key, $operator = null, $value )
     {
         $data = $this->readFile();
+
+        if ( ! $data ) 
+        {
+            return;
+        }
 
         if ( ! isset( $operator ) )
         {
