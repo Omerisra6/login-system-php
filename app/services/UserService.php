@@ -7,6 +7,11 @@ use  app\utils\Response;
 
 class  UserService
 {
+    static function make( )
+    {
+        return new static();
+    }
+
     function addUser( $username, $password )
     {    
         $hashed_password = password_hash( $password, PASSWORD_DEFAULT );

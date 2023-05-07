@@ -13,6 +13,11 @@ class ValidateCreateUserRequest
         $this->request = $request;
     }
 
+    static function make( $request )
+    {
+        return new static( $request );
+    }
+
     function validate()
     {
         $username         = preg_replace('/\s+/', '', $this->request['username']);

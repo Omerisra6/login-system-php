@@ -13,7 +13,11 @@ class ValidateLoginUserRequest
         $this->request = $request;
     }
 
-    function validate()
+    static function make( $request )
+    {
+        return new static( $request );
+    }
+    
     {
         if (  ! isset( $this->request[ 'username' ] ) || ! isset( $this->request[ 'password' ] ) )
         {

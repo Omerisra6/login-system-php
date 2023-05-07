@@ -12,6 +12,11 @@ class HtmlResponse
         $this->attributes = $attributes;
     }
 
+    static function make( $filePath, $attributes = [] )
+    {
+        return new static( $filePath, $attributes );
+    }
+
     public function send()
     {
         ob_start();

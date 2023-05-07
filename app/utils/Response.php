@@ -15,6 +15,11 @@ class Response
         $this->redirect = $redirect;
     }
 
+    static function make( $statusCode, $data = '', $redirect = false )
+    {
+        return new static( $statusCode, $data, $redirect );
+    }
+
     public function send()
     {
         if ( $this->redirect ) 
