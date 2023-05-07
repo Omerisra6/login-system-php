@@ -1,14 +1,18 @@
+# Use an official PHP runtime as the base image
 FROM php:7.4-apache
 
-# Copy app folder
-COPY ./App /var/www/html/App
+# Set the working directory inside the container
+WORKDIR /var/www/html
 
-# Copy public folder
-COPY ./public /var/www/html/public
+# Copy the application files to the working directory
+COPY . .
 
-# Copy index.php from the root
-COPY ./index.php /var/www/html/index.php
+# Install any dependencies your application requires
+# For example, if you use composer, uncomment the following lines
+# COPY composer.json composer.lock ./
+# RUN composer install --no-scripts --no-autoloader
 
+# Expose port 80 for the Apache server
 EXPOSE 80
 
 # Set the default command
