@@ -1,8 +1,8 @@
 <?php
-namespace  app\services;
+namespace App\Services;
 
-use  app\utils\DB;
-use  app\utils\Response;
+use  App\Utils\DB;
+use  App\Utils\Response;
 
 
 class  UserService
@@ -39,7 +39,7 @@ class  UserService
 
         if ( ! password_verify( $password, $user_details[ 0 ][ 'hashed_password' ] ) )
         {
-            ( new Response( 400, 'Wrong password' ) )->send();
+            Response::make( 400, 'Wrong password' )->send();
         }
 
         $this->updateUser( $user_details[ 0 ][ 'id' ] );

@@ -1,12 +1,12 @@
 <?php
-namespace  app\utils;
+namespace App\Utils;
 
 class HtmlResponse
 {
     private $filePath;
     private $attributes;
 
-    public function __construct($filePath, $attributes = [])
+    public function __construct( $filePath, $attributes = [] )
     {
         $this->filePath = $filePath;
         $this->attributes = $attributes;

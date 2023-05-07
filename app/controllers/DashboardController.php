@@ -1,8 +1,8 @@
 <?php
-namespace app\controllers;
+namespace App\Controllers;
 
-use  app\utils\HtmlResponse;
-use  app\utils\Response;
+use App\Utils\HtmlResponse;
+use App\Utils\Response;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -16,11 +16,11 @@ class DashboardController
     {
         if ( ! isset( $_SESSION[ 'id' ] ) ) 
         {
-            ( new Response( 302, '/login' , true ) )->send();
+            Response::make( 302, '/login' , true )->send();
         }
 
         $indexPath = PUBLIC_PATH . '/index.php';
-        ( new HtmlResponse( $indexPath, [ 'username' => $_SESSION[ 'username' ], 'id' => $_SESSION[ 'id' ] ] ) )
+        HtmlResponse::make( $indexPath, [ 'username' => $_SESSION[ 'username' ], 'id' => $_SESSION[ 'id' ] ] )
         ->send();
     }
 }

@@ -1,8 +1,8 @@
 <?php
-namespace  app\validators;
+namespace App\Validators;
 
-use  app\utils\Response;
-use  app\utils\DB;
+use App\Utils\Response;
+use App\Utils\DB;
 
 class ValidateLoginUserRequest
 {
@@ -18,10 +18,11 @@ class ValidateLoginUserRequest
         return new static( $request );
     }
     
+    function validate( )
     {
         if (  ! isset( $this->request[ 'username' ] ) || ! isset( $this->request[ 'password' ] ) )
         {
-            ( new Response( 400, 'Please fill all required fields' ) )->send();
+            Response::make( 400, 'Please fill all required fields' )->send();
         }
         
         $username = preg_replace('/\s+/', '', $this->request[ 'username' ]) ?? null;
@@ -29,13 +30,15 @@ class ValidateLoginUserRequest
     
         if ( ! $username || ! $password )
         {
-            ( new Response( 400, 'Please fill all required fields' ) )->send();
+            Response::make( 400, 'Please fill all required fields' )->send();
         }
     
     
         if ( ! DB::table( 'users' )->where( 'username', null, $username ) ) 
         {
-            ( new Response( 404, 'User not found' ) )->send();
+            Response::make( 404, 'User not found' )->send();
         }
+
+        return [ 'username' => $username, 'password' => $password ];
     }
 }

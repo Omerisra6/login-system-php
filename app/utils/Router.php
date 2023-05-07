@@ -1,8 +1,8 @@
 <?php
-namespace app\utils;
+namespace App\Utils;
 
-use app\utils\Response;
-use app\utils\HtmlResponse;
+use App\Utils\Response;
+use App\Utils\HtmlResponse;
 
 class Router {
 
@@ -21,9 +21,9 @@ class Router {
             
             file_exists( $viewPath )
             ? 
-            ( new HtmlResponse( $viewPath ) )->send()
+            HtmlResponse::make( $viewPath )->send()
             :
-            ( new Response( 404, 'Not found' ) )->send();
+            Response::make( 404, 'Not found' )->send();
         }
 
         $this->executeHandler( $path );

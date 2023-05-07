@@ -1,8 +1,8 @@
 <?php
 
-use app\controllers\DashboardController;
-use app\controllers\UserController;
-use app\utils\Router;
+use App\Controllers\DashboardController;
+use App\Controllers\UserController;
+use App\Utils\Router;
 
 $router          = new Router( );
 

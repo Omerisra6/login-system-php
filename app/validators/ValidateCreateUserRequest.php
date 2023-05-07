@@ -1,8 +1,8 @@
 <?php
-namespace  app\validators;
+namespace App\Validators;
 
-use  app\utils\Response;
-use  app\utils\DB;
+use App\Utils\Response;
+use App\Utils\DB;
 
 class ValidateCreateUserRequest
 {
@@ -26,20 +26,17 @@ class ValidateCreateUserRequest
         
         if ( ! isset( $username ) || !  isset( $password ) || ! isset( $password_confirm )) 
         {
-            ( new Response( 400, 'Please fill all required fields' ) )->send();
+            Response::make( 400, 'Please fill all required fields' )->send();
         }
 
         if( $password !== $password_confirm)
         {
-            ( new Response( 400, 'Passwords don\'t match' ) )->send();
+            Response::make( 400, 'Passwords don\'t match' )->send();
         }
 
         if (  DB::table( 'users' )->where( 'username', null , $username ) ) 
         {
-            ( new Response( 409, 'User already exists' ) )->send();
+            Response::make( 409, 'User already exists' )->send();
         }
     }
-
-    
-    
 }
