@@ -30,8 +30,13 @@ logOutButton.addEventListener( 'click', async () => {
 })
 
 
-loggedUserDetailsPopWrapper.addEventListener( 'click', () => {
+loggedUserDetailsPopWrapper.addEventListener( 'click', ( e ) => {
 
+    if ( e.currentTarget !== e.target ) 
+    {
+        return
+    }
+    
     loggedUserDetailsPopWrapper.classList.toggle( 'invisible' )
 })
 
