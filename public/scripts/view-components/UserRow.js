@@ -8,12 +8,15 @@ export const UserRow = ( user ) =>{
     userRowElement.classList.add = 'logged-user'
     userRowElement.dataset.id    = user[ 'id' ]
 
-    const date = formatDate( user[ 'last_action' ] )
+    const loginTime  = formatDate( user[ 'last_login' ] )
+    const lastUpdate = formatDate( user[ 'last_action' ] )
+    console.log( user[ 'last_login' ], user[ 'last_action' ] );
+    
     userRowElement.innerHTML = 
     `   
     <td> ${ user[ 'username' ] } </td>
-    <td> ${ user[ 'last_login' ] } </td>
-    <td> ${ date  } </td>
+    <td> ${ loginTime} </td>
+    <td> ${ lastUpdate  } </td>
     <td> ${ user[ 'ip' ] } </td>   
     `
 
