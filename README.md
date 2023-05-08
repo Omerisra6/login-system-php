@@ -27,7 +27,8 @@
 
 
 ## Key Features
-
+* Docker Compatibility
+  - The application is designed to work seamlessly with Docker, allowing for easy deployment and containerization of the app.
 * Responsive design 
   - The app is optimized for desktop and mobile devices, ensuring a smooth experience for all users.
 * CSV Database:
@@ -43,13 +44,16 @@
 
 ## How To Use
 
-To clone and run this application, you'll need [Git](https://git-scm.com), [PHP](https://www.php.net/) and a Web Server as [XAMPP](https://www.apachefriends.org/) installed on your computer. 
-First start apache on your installed web server.
+To clone and run this application, you'll need [Git](https://git-scm.com), [PHP](https://www.php.net/) and [Docker](https://www.docker.com/) installed on your computer. 
 From your command line:
 
 ```bash
+
+# Build Image
+docker build -t login-system-image .
+
 # Serve App
-php -S 127.0.0.1:8000
+docker run -p 80:80 login-system-image
 ```
 
 ## Credits
@@ -57,6 +61,7 @@ php -S 127.0.0.1:8000
 This software uses the following open source packages:
 
 - [PHP](https://www.php.net/)
+- [Docker](https://www.docker.com/)
 
 ## License
 
