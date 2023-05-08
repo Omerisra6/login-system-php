@@ -1,8 +1,12 @@
+import { formatDate } from "../utils/helpers"
+
 export const UserInPop = ( user ) =>{
     
-    const userInPopElement         = document.createElement( 'div' )
+    const userInPopElement      = document.createElement( 'div' )
+    const registerTime          = formatDate( user[ 'register_time' ] )
+    userInPopElement.dataset.id = user[ 'id' ]
+
     userInPopElement.classList.add( 'logged-user' )
-    userInPopElement.dataset.id    = user[ 'id' ]
 
     userInPopElement.innerHTML = 
     `   
@@ -15,7 +19,7 @@ export const UserInPop = ( user ) =>{
 
     <div class="user-detail">
         <h5> Register Time</h5>
-        <h3> ${ user[ 'register_time' ] } </h3>
+        <h3> ${ registerTime } </h3>
     </div>
 
     <div class="user-detail">
