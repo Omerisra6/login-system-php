@@ -57,10 +57,13 @@ class UserController
         {
             Response::make( 400, 'User is not logged in' )->send();
         }
+
+        if ( ! isset( $_GET[ 'id' ] ) ) 
+        {
+            Response::make( 404, 'User not found' )->send();
+        }
     
-        //Gets the user from request username
-        $user = DB::table( 'users' )->get( $_GET[ 'id' ] );
-        unset( $user[ 'hashed_password' ] );
+        $user = UserService::make()->getUser( $_GET[ 'id' ]);
     
         Response::make( 200, $user )->send();
     }

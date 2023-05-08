@@ -15,12 +15,11 @@ class  UserService
     function addUser( $username, $password )
     {    
         $hashed_password = password_hash( $password, PASSWORD_DEFAULT );
-        $login_count     = 0;
+        $login_count     = 1;
         $ip              = $_SERVER['REMOTE_ADDR'];
         $user_agent      = $_SERVER['HTTP_USER_AGENT'];
-        $now             = date('Y-m-d H:i:s');     
+        $now             = time();     
       
-        
         $user = array(
             'username' => $username, 'hashed_password' => $hashed_password,
             'login_count' => $login_count, 'ip' => $ip, 'user_agent' => $user_agent, 
@@ -70,6 +69,20 @@ class  UserService
         return $loggedUsers;
     }
 
+    function getUser( $id )
+    {
+        $user = DB::table( 'users' )->get( $id );
+
+        if ( ! isset( $user ) ) 
+        {
+            Response::make( 404, 'User not found' )->send();
+        }
+
+        unset( $user[ 'hashed_password' ] );
+
+        return $user;
+    }
+
     
     private function updateUser( $current_id = null )
     {
@@ -85,12 +98,12 @@ class  UserService
         if ( ! isset( $_SESSION[ 'id' ] ) ) 
         {
             $user_details[ 'login_count' ] = (int)$user_details[ 'login_count' ] + 1;
-            $user_details[ 'last_login' ] =  date("Y-m-d H:i:s"); 
+            $user_details[ 'last_login' ]  =  time(); 
         }
 
         $user_details[ 'ip' ] = $_SERVER[ 'REMOTE_ADDR' ];
         $user_details[ 'user_agent' ] = $_SERVER[ 'HTTP_USER_AGENT' ];
-        $user_details[ 'last_action' ] = time();
+        $user_details[ 'last_action' ] = time(); 
 
         DB::table( 'users' )->update( $current_id, $user_details );
     }
