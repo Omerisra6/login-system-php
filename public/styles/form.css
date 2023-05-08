@@ -94,6 +94,7 @@ body{
     cursor: pointer;
     color: white;
     min-width: 200px;
+    font-size: var( --font-size-md );
 }
 
 .text-action{
