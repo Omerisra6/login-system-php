@@ -1,69 +1,65 @@
 <?php
+
 namespace App\Utils;
 
 use InvalidArgumentException;
 
-class DB {
+class DB
+{
+    private $dataFile;
 
-    private $dataFile;        
-
-    private function __construct( $tableName )
+    private function __construct($tableName)
     {
         $filePath = DB_DIR . '/' . $tableName . '.json';
 
-        if ( ! file_exists( $filePath ) ) 
-        {
-            $this->writeFile( [] );
+        if (! file_exists($filePath)) {
+            $this->writeFile([]);
         }
 
         $this->dataFile = $filePath;
     }
 
     //Returns new instance by usimg the constructor and specify table name
-    static function table( $tableName )
+    public static function table($tableName)
     {
-        return new static( $tableName );
+        return new static($tableName);
     }
-    
+
     //Inserts new item to table
-    public function insert( $item )
+    public function insert($item)
     {
         $item[ 'id' ] = uniqid();
         $item[ 'time_created'] = time();
         $item[ 'time_updated'] = time();
-        
+
         $data = $this->readFile() ?? [];
 
-        array_push( $data, $item );
+        array_push($data, $item);
 
-        $this->writeFile( $data );
+        $this->writeFile($data);
 
         return $item;
     }
 
-    //Returns all items that fits the condition 
-    public function where( $key, $operator = null, $value )
+    //Returns all items that fits the condition
+    public function where($key, $operator = null, $value)
     {
         $data = $this->readFile();
 
-        if ( ! $data ) 
-        {
+        if (! $data) {
             return;
         }
 
-        if ( ! isset( $operator ) )
-        {
-            $results = array_filter( $data, function( $item ) use ( $key, $value ){
-
+        if (! isset($operator)) {
+            $results = array_filter($data, function ($item) use ($key, $value) {
                 return $item[ $key ] === $value;
             });
 
-            return array_values( $results );
+            return array_values($results);
         }
 
-        $results = array_filter( $data, function( $item ) use ( $operator, $key, $value )
-        {
-            switch (  $operator ) {
+        $results = array_filter($data, function ($item) use ($operator, $key, $value) {
+            switch ($operator) {
                 case '>':
                     return (int)$item[  $key ] >  $value;
 
@@ -77,66 +73,61 @@ class DB {
                     return (int)$item[  $key ] !==  $value;
 
                 default:
-                    throw new InvalidArgumentException( 'Invalid operator' );
-            }                   
+                    throw new InvalidArgumentException('Invalid operator');
+            }
         });
 
-        return array_values( $results );
+        return array_values($results);
     }
 
-    public function delete( $id )
+    public function delete($id)
     {
-        [ $index, $item ] = $this->getItem( $id );
-        if ( ! isset( $index ) )
-        {
+        [ $index, $item ] = $this->getItem($id);
+        if (! isset($index)) {
             return null;
         }
 
         $data = $this->readFile();
 
-        unset( $data[ $index ] );
+        unset($data[ $index ]);
 
-        $this->writeFile( $data );
-
-        return $item;
-    } 
-
-    public function get( $id )
-    {
-        [ $index, $item ] = $this->getItem( $id );
+        $this->writeFile($data);
 
         return $item;
     }
 
-    public function update( $id, $updatedItem )
+    public function get($id)
     {
-        [ $index, $item ] = $this->getItem( $id );
+        [ $index, $item ] = $this->getItem($id);
 
-        if ( ! isset( $index ) )
-        {
+        return $item;
+    }
+
+    public function update($id, $updatedItem)
+    {
+        [ $index, $item ] = $this->getItem($id);
+
+        if (! isset($index)) {
             return null;
-        }   
+        }
 
         $data = $this->readFile();
 
         $updatedItem[ 'time_updated' ] = time();
 
-        $data[ $index ] = array_merge( $item, $updatedItem );
+        $data[ $index ] = array_merge($item, $updatedItem);
 
-        $this->writeFile( $data );
+        $this->writeFile($data);
 
         return $id;
     }
 
-    private function getItem( $id )
+    private function getItem($id)
     {
-        
         $data = $this->readFile();
 
-        foreach ( $data as $index => $item )
-        {
-            if ( $item[ 'id' ] === $id ) 
-            {
+        foreach ($data as $index => $item) {
+            if ($item[ 'id' ] === $id) {
                 return[ $index, $item];
             }
         }
@@ -146,13 +137,12 @@ class DB {
 
     private function readFile()
     {
-        $file = file_get_contents( $this->dataFile );
-        return json_decode( $file, true );
+        $file = file_get_contents($this->dataFile);
+        return json_decode($file, true);
     }
 
-    private function writeFile( $data )
+    private function writeFile($data)
     {
-        file_put_contents( $this->dataFile, json_encode( $data ) );
+        file_put_contents($this->dataFile, json_encode($data));
     }
 }
-
