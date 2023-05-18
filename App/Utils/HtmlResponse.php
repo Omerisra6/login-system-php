@@ -27,6 +27,5 @@ class HtmlResponse
 
         header('Content-Type: text/html');
         echo $content;
-        exit();
     }
 }

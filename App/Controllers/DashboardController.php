@@ -16,11 +16,9 @@ class DashboardController
     public function show()
     {
         if (! isset($_SESSION[ 'id' ])) {
-            Response::make(302, '/login', true)->send();
+            return Response::make(302, '/login', true);
         }
 
-        $indexPath = PUBLIC_PATH . '/index.php';
-        HtmlResponse::make($indexPath, [ 'username' => $_SESSION[ 'username' ], 'id' => $_SESSION[ 'id' ] ])
-        ->send();
+        return HtmlResponse::make(INDEX_PATH, [ 'username' => $_SESSION[ 'username' ], 'id' => $_SESSION[ 'id' ] ]);
     }
 }

@@ -2,17 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Validators\ValidateCreateUserRequest;
-use App\Validators\ValidateLoginUserRequest;
 use App\Services\UserService;
 use App\Utils\Response;
-
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+use App\Validators\CreateUserRequest;
+use App\Validators\GetUserRequest;
+use App\Validators\LoginUserRequest;
 
 class UserController
 {
@@ -23,55 +17,45 @@ class UserController
 
     public function create()
     {
-        ValidateCreateUserRequest::make($_POST)->validate();
+        CreateUserRequest::make($_POST)->validate();
 
         UserService::make()->addUser($_POST[ 'username' ], $_POST[ 'password' ]);
 
-        Response::make(200, 'Signed up sucsessfully')->send();
+        return Response::make(200, 'Signed up sucsessfully');
     }
 
     public function login()
     {
-        ValidateLoginUserRequest::make($_GET)->validate();
-
+        LoginUserRequest::make($_GET)->validate();
         $username = preg_replace('/\s+/', '', $_GET['username']);
         $password = $_GET[ 'password' ];
 
         UserService::make()->loginUser($username, $password);
 
-        Response::make(200, 'Logged in sucsessfully')->send();
+        return Response::make(200, _('Logged in sucsessfully'));
     }
 
     public function logout()
     {
         UserService::make()->logOutUser();
 
-        Response::make(200, 'Logged out sucsessfully')->send();
+        return Response::make(200, _('Logged out sucsessfully'));
     }
 
     public function get()
     {
-        if (! isset($_SESSION[ 'id' ])) {
-            Response::make(400, 'User is not logged in')->send();
-        }
-
-        if (! isset($_GET[ 'id' ])) {
-            Response::make(404, 'User not found')->send();
-        }
-
+        GetUserRequest::make($_GET)->validate();
         $user = UserService::make()->getUser($_GET[ 'id' ]);
 
-        Response::make(200, $user)->send();
+        return Response::make(200, $user);
     }
 
     public function getLogged()
     {
-        if (! isset($_SESSION[ 'id' ])) {
-            Response::make(400, 'User is not logged in')->send();
-        }
+        GetUserRequest::make($_GET)->validate();
 
         $loggedUsers = UserService::make()->getLoggedUsers();
 
-        Response::make(200, $loggedUsers)->send();
+        Response::make(200, $loggedUsers);
     }
 }

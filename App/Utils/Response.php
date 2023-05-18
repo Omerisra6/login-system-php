@@ -4,9 +4,9 @@ namespace App\Utils;
 
 class Response
 {
-    private $statusCode;
-    private $data;
-    private $redirect;
+    public $statusCode;
+    public $data;
+    public $redirect;
 
     public function __construct($statusCode, $data = '', $redirect = false)
     {

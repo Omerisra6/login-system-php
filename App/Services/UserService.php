@@ -37,7 +37,7 @@ class UserService
         $user_details = DB::table('users')->where('username', null, $username);
 
         if (! password_verify($password, $user_details[ 0 ][ 'hashed_password' ])) {
-            Response::make(400, 'Wrong password')->send();
+            throw new \Exception(_('Wrong password'), 400);
         }
 
         $this->updateUser($user_details[ 0 ][ 'id' ]);
@@ -71,7 +71,7 @@ class UserService
         $user = DB::table('users')->get($id);
 
         if (! isset($user)) {
-            Response::make(404, 'User not found')->send();
+            throw new \Exception(_('User not found'), 404);
         }
 
         unset($user[ 'hashed_password' ]);

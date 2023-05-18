@@ -16,17 +16,21 @@ class Router
 
     public function route($path)
     {
-        if (! isset($this->routes[ $path ])) {
-            $viewPath = $this->getFilePath($path);
+        $this->getResponse($path)->send();
+    }
 
-            file_exists($viewPath)
-            ?
-            HtmlResponse::make($viewPath)->send()
-            :
-            Response::make(404, 'Not found')->send();
+    public function getResponse($path)
+    {
+        $viewPath = $this->getFilePath($path);
+        if (! isset($this->routes[ $path ]) && ! file_exists($viewPath)) {
+            return Response::make(404, 'Not found');
         }
 
-        $this->executeHandler($path);
+        if (! isset($this->routes[ $path ])) {
+            return HtmlResponse::make($viewPath);
+        }
+
+        return $this->executeHandler($path);
     }
 
     private function getFilePath($path)
@@ -53,6 +57,11 @@ class Router
         $queryParams = $this->extractQueryParams($path);
         $handler     = $this->routes[ $path ];
 
-        $handler($queryParams);
+        try {
+            $res = $handler($queryParams);
+        } catch (\Exception $ex) {
+            return Response::make($ex->getCode(), $ex->getMessage());
+        }
+        return $res;
     }
 }

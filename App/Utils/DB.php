@@ -19,13 +19,11 @@ class DB
         $this->dataFile = $filePath;
     }
 
-    //Returns new instance by usimg the constructor and specify table name
     public static function table($tableName)
     {
         return new static($tableName);
     }
 
-    //Inserts new item to table
     public function insert($item)
     {
         $item[ 'id' ] = uniqid();
@@ -41,7 +39,6 @@ class DB
         return $item;
     }
 
-    //Returns all items that fits the condition
     public function where($key, $operator = null, $value)
     {
         $data = $this->readFile();

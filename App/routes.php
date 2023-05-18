@@ -4,7 +4,7 @@ use App\Controllers\DashboardController;
 use App\Controllers\UserController;
 use App\Utils\Router;
 
-$router          = new Router();
+$router = new Router();
 
 //Dashboard Routes
 $router->addRoute('/', [ DashboardController::class, 'show' ]);
