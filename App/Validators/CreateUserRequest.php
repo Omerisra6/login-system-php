@@ -2,23 +2,10 @@
 
 namespace App\Validators;
 
-use App\Utils\Response;
 use App\Utils\DB;
 
-class ValidateCreateUserRequest
+class CreateUserRequest extends Validator
 {
-    private $request;
-
-    public function __construct($request)
-    {
-        $this->request = $request;
-    }
-
-    public static function make($request)
-    {
-        return new static($request);
-    }
-
     public function validate()
     {
         $username         = preg_replace('/\s+/', '', $this->request['username']);
@@ -26,15 +13,15 @@ class ValidateCreateUserRequest
         $password_confirm = $this->request[ 'password_confirm' ];
 
         if (! isset($username) || !  isset($password) || ! isset($password_confirm)) {
-            Response::make(400, 'Please fill all required fields')->send();
+            throw new \Exception('Please fill all required fields', 400);
         }
 
         if ($password !== $password_confirm) {
-            Response::make(400, 'Passwords don\'t match')->send();
+            throw new \Exception('Passwords don\'t match', 400);
         }
 
         if (DB::table('users')->where('username', null, $username)) {
-            Response::make(409, 'User already exists')->send();
+            throw new \Exception('User already exists', 409);
         }
     }
 }

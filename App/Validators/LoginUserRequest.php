@@ -2,39 +2,26 @@
 
 namespace App\Validators;
 
-use App\Utils\Response;
 use App\Utils\DB;
 
-class ValidateLoginUserRequest
+class LoginUserRequest extends Validator
 {
-    private $request;
-
-    public function __construct($request)
-    {
-        $this->request = $request;
-    }
-
-    public static function make($request)
-    {
-        return new static($request);
-    }
-
     public function validate()
     {
         if (! isset($this->request[ 'username' ]) || ! isset($this->request[ 'password' ])) {
-            Response::make(400, 'Please fill all required fields')->send();
+            throw new \Exception(_('Please fill all required fields'), 400);
         }
 
         $username = preg_replace('/\s+/', '', $this->request[ 'username' ]) ?? null;
         $password = $this->request[ 'password' ] ?? null;
 
         if (! $username || ! $password) {
-            Response::make(400, 'Please fill all required fields')->send();
+            throw new \Exception(_('Please fill all required fields'), 400);
         }
 
 
         if (! DB::table('users')->where('username', null, $username)) {
-            Response::make(404, 'User not found')->send();
+            throw new \Exception(_('User not found'), 404);
         }
 
         return [ 'username' => $username, 'password' => $password ];
