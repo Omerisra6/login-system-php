@@ -1,1 +1,4 @@
-/app/DB/*
+\App\DB\*
+\vendor
+\tools
+\.phpunit.result.cache
