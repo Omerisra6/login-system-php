@@ -6,11 +6,13 @@ class HtmlResponse
 {
     private $filePath;
     private $attributes;
+    public $statusCode;
 
-    public function __construct($filePath, $attributes = [])
+    public function __construct($filePath, $attributes = [], $statusCode = 200 )
     {
         $this->filePath = $filePath;
         $this->attributes = $attributes;
+        $this->statusCode = $statusCode;
     }
 
     public static function make($filePath, $attributes = [])
