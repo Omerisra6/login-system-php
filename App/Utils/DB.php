@@ -56,16 +56,16 @@ class DB
         $results = array_filter($data, function ($item) use ($operator, $key, $value) {
             switch ($operator) {
                 case '>':
-                    return (int)$item[  $key ] >  $value;
+                    return $item[ $key ] > strval( $value );
 
                 case '<':
-                    return (int)$item[  $key ] <  $value;
+                    return $item[ $key ] < strval( $value );
 
                 case '===':
-                    return (int)$item[  $key ] ===  $value;
+                    return $item[ $key ] === strval( $value );
 
                 case '!==':
-                    return (int)$item[  $key ] !==  $value;
+                    return $item[ $key ] !== strval( $value );
 
                 default:
                     throw new InvalidArgumentException('Invalid operator');
