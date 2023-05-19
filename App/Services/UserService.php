@@ -58,8 +58,7 @@ class UserService
         $loggedUsers = DB::table('users')->where('last_action', '>', time() - 180);
 
         $this->updateUser();
-        if ( ! $loggedUsers) 
-        {
+        if (! $loggedUsers) {
             return [];
         }
         foreach ($loggedUsers as $index => $user) {

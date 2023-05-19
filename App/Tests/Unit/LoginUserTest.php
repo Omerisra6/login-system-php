@@ -7,9 +7,7 @@ use App\Services\UserService;
 use App\Utils\AppRouter;
 use App\Utils\DB;
 
-
-it( 'returns an error when a username or password is not passed', function ( ) {
-    
+it('returns an error when a username or password is not passed', function () {
     $router = AppRouter::router();
 
     UserService::make()->addUser('josh', 'Aa123');
@@ -25,10 +23,9 @@ it( 'returns an error when a username or password is not passed', function ( ) {
 
     $validLoginResponse = $router->getResponse($validUri);
     $this->assertEquals(200, $validLoginResponse->statusCode);
-
 });
 
-it( 'returns an error when a username or password is not set', function () {
+it('returns an error when a username or password is not set', function () {
     $router = AppRouter::router();
 
     UserService::make()->addUser('josh', 'Aa123');
@@ -44,10 +41,9 @@ it( 'returns an error when a username or password is not set', function () {
 
     $validLoginResponse = $router->getResponse($validUri);
     $this->assertEquals(200, $validLoginResponse->statusCode);
-
 });
 
-it( 'returns an error when a user is not found in DB', function () {
+it('returns an error when a user is not found in DB', function () {
     $router = AppRouter::router();
 
     UserService::make()->addUser('josh', 'Aa123');
@@ -60,10 +56,9 @@ it( 'returns an error when a user is not found in DB', function () {
 
     $validLoginResponse = $router->getResponse($validUri);
     $this->assertEquals(200, $validLoginResponse->statusCode);
-
 });
 
-it( 'returns an error when a wrong password is passed', function () {
+it('returns an error when a wrong password is passed', function () {
     $router = AppRouter::router();
 
     UserService::make()->addUser('josh', 'Aa123');
@@ -76,7 +71,8 @@ it( 'returns an error when a wrong password is passed', function () {
 
     $validLoginResponse = $router->getResponse($validUri);
     $this->assertEquals(200, $validLoginResponse->statusCode);
-
 });
 
-afterEach( function(){  DB::clear(); });
+afterEach(function () {
+    DB::clear();
+});

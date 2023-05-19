@@ -1,43 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/ea6d546e2a.js" crossorigin="anonymous"></script>
-    <link rel="icon" href="./public/images/favicon.ico">
-    <link rel="stylesheet" href="./public/styles/form.css">
-    <link rel="stylesheet" href="./public/styles/index.css"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/ea6d546e2a.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="icon" href="./public/images/favicon.ico" />
+    <link rel="stylesheet" href="./public/styles/form.css" />
+    <link rel="stylesheet" href="./public/styles/index.css" />
     <title>Login</title>
-</head>
-<body>
-    <div class="form-wrapper"> 
-        <div class="pink-circle"></div>
+  </head>
+  <body>
+    <div class="form-wrapper">
+      <div class="pink-circle"></div>
 
-        <div class="black-circle"></div>
+      <div class="black-circle"></div>
 
-        <form class="form-container" action="/user/login" method="GET">
+      <form class="form-container" action="/user/login" method="GET">
+        <h1 class="title">Log in.</h1>
 
-            <h1 class="title">Log in.</h1>
+        <div class="form-input providers">
+          <i class="fa fa-google"></i>
+          <h5>Continue With Google</h5>
+        </div>
+        <div class="form-input providers">
+          <i class="fa fa-facebook"></i>
+          <h5>Continue With Facebook</h5>
+        </div>
 
-            <div class="form-input providers"> <i class="fa fa-google"></i> <h5>Continue With Google </h5></div>
-            <div class="form-input providers"><i class="fa fa-facebook"></i> <h5>Continue With Facebook </h5></div>
+        <h3 class="or-text">or</h3>
 
-            <h3 class="or-text">or</h3>
+        <div class="errors-container"></div>
 
-            <div class="errors-container"></div>
-            
-            <input type="text" class="form-input username-input" placeholder="Username" name="username" id="username"/>
-            <input type="password" class="form-input password-input" placeholder="Password" name="password" id="password"/>
+        <input
+          type="text"
+          class="form-input username-input"
+          placeholder="Username"
+          name="username"
+          id="username"
+        />
+        <input
+          type="password"
+          class="form-input password-input"
+          placeholder="Password"
+          name="password"
+          id="password"
+        />
 
-            <button class="form-sumbit-button login-form-sumbit-button" type="submit">Login</button>
+        <button
+          class="form-sumbit-button login-form-sumbit-button"
+          type="submit"
+        >
+          Login
+        </button>
 
-            <div class="link-to">Dont have an account? <a href='/signup' class="text-action">Create account</span></a>
-
-
-        </form>
-    
+        <div class="link-to">
+          Dont have an account?
+          <a href="/signup" class="text-action">Create account</a>
+        </div>
+      </form>
     </div>
-</body>
-<script type="module" src="./public/scripts/pages/login.js"></script>
+  </body>
+  <script type="module" src="./public/scripts/pages/login.js"></script>
 </html>

@@ -21,20 +21,18 @@ class Router
 
     public function json($data)
     {
-        $_POST = $data;    
+        $_POST = $data;
         return $this;
     }
 
     public function actAs($user)
     {
-        if (session_status() === PHP_SESSION_NONE) 
-        {
-
+        if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
-        $_SESSION[ 'id' ]       = $user[ 'id' ]; 
-        $_SESSION[ 'username' ] = $user[ 'username' ]; 
+        $_SESSION[ 'id' ]       = $user[ 'id' ];
+        $_SESSION[ 'username' ] = $user[ 'username' ];
 
         return $this;
     }
@@ -84,7 +82,7 @@ class Router
         [ 'handler' => $handler, 'method' => $method ] = $this->routes[ $path ];
 
         $request = $method === 'GET' ? $this->extractQueryParams($uri) : $_POST;
-        
+
         try {
             $res = $handler($request);
         } catch (\Exception $ex) {

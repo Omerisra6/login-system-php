@@ -1,17 +1,17 @@
-:root{
-    --font-size-xs: 0.7vw;
-    --font-size-sm: 1vw;
-    --font-size-md: 1.5vw;
-    --font-size-lg: 2vw;
-    --font-size-xl: 3vw;
+:root {
+  --font-size-xs: 0.7vw;
+  --font-size-sm: 1vw;
+  --font-size-md: 1.5vw;
+  --font-size-lg: 2vw;
+  --font-size-xl: 3vw;
 }
 
-@media ( max-width: 600px ) {
-    :root{
-        --font-size-xs: 0.4rem;
-        --font-size-sm: 0.6rem;
-        --font-size-md: 1.0rem;
-        --font-size-lg: 1.5rem;
-        --font-size-xl: 2rem;
-    }
+@media (max-width: 600px) {
+  :root {
+    --font-size-xs: 0.4rem;
+    --font-size-sm: 0.6rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.5rem;
+    --font-size-xl: 2rem;
+  }
 }

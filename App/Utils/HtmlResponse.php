@@ -8,7 +8,7 @@ class HtmlResponse
     private $attributes;
     public $statusCode;
 
-    public function __construct($filePath, $attributes = [], $statusCode = 200 )
+    public function __construct($filePath, $attributes = [], $statusCode = 200)
     {
         $this->filePath = $filePath;
         $this->attributes = $attributes;

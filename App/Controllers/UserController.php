@@ -26,7 +26,7 @@ class UserController
         return Response::make(200, 'Signed up sucsessfully');
     }
 
-    public function login( $request )
+    public function login($request)
     {
         [ 'username' => $username, 'password' => $password ] = LoginUserRequest::make($request)->validate();
 

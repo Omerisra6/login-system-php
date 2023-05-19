@@ -6,8 +6,8 @@ use App\Controllers\DashboardController;
 use App\Controllers\UserController;
 use App\Utils\Router;
 
-class AppRouter{
-    
+class AppRouter
+{
     public $router;
 
     public function __construct()
@@ -22,13 +22,13 @@ class AppRouter{
         $router->post('/user/signup', [ UserController::class, 'create' ]);
         $router->get('/user/logout', [ UserController::class, 'logout' ]);
         $router->get('/user', [ UserController::class, 'get' ]);
-        $router->get('/user/get-logged', [ UserController::class, 'getLogged' ]);    
+        $router->get('/user/get-logged', [ UserController::class, 'getLogged' ]);
 
         $this->router = $router;
-    }   
+    }
 
     public static function router()
     {
         return (new static())->router;
-    }   
+    }
 }

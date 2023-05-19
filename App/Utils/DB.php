@@ -56,16 +56,16 @@ class DB
         $results = array_filter($data, function ($item) use ($operator, $key, $value) {
             switch ($operator) {
                 case '>':
-                    return $item[ $key ] > strval( $value );
+                    return $item[ $key ] > strval($value);
 
                 case '<':
-                    return $item[ $key ] < strval( $value );
+                    return $item[ $key ] < strval($value);
 
                 case '===':
-                    return $item[ $key ] === strval( $value );
+                    return $item[ $key ] === strval($value);
 
                 case '!==':
-                    return $item[ $key ] !== strval( $value );
+                    return $item[ $key ] !== strval($value);
 
                 default:
                     throw new InvalidArgumentException('Invalid operator');
@@ -141,9 +141,9 @@ class DB
         file_put_contents($this->dataFile, json_encode($data));
     }
 
-    static function clear()
+    public static function clear()
     {
-        $tables = glob( DB_DIR . '/*');
+        $tables = glob(DB_DIR . '/*');
 
         foreach ($tables as $table) {
             if (is_file($table)) {
