@@ -16,8 +16,8 @@ class UserService
     {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $login_count     = 1;
-        $ip              = $_SERVER['REMOTE_ADDR'];
-        $user_agent      = $_SERVER['HTTP_USER_AGENT'];
+        $ip              = $_SERVER['REMOTE_ADDR'] ?? '';
+        $user_agent      = $_SERVER['HTTP_USER_AGENT'] ?? '';
         $now             = time();
 
         $user = array(
@@ -58,7 +58,10 @@ class UserService
         $loggedUsers = DB::table('users')->where('last_action', '>', time() - 180);
 
         $this->updateUser();
-
+        if ( ! $loggedUsers) 
+        {
+            return [];
+        }
         foreach ($loggedUsers as $index => $user) {
             unset($loggedUsers[ $index ][ 'hashed_password' ]);
         }
@@ -94,8 +97,8 @@ class UserService
             $user_details[ 'last_login' ]  =  time();
         }
 
-        $user_details[ 'ip' ] = $_SERVER[ 'REMOTE_ADDR' ];
-        $user_details[ 'user_agent' ] = $_SERVER[ 'HTTP_USER_AGENT' ];
+        $user_details[ 'ip' ] = $_SERVER[ 'REMOTE_ADDR' ] ?? '';
+        $user_details[ 'user_agent' ] = $_SERVER[ 'HTTP_USER_AGENT' ] ?? '';
         $user_details[ 'last_action' ] = time();
 
         DB::table('users')->update($current_id, $user_details);
