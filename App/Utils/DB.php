@@ -140,4 +140,15 @@ class DB
     {
         file_put_contents($this->dataFile, json_encode($data));
     }
+
+    static function clear()
+    {
+        $tables = glob( DB_DIR . '/*');
+
+        foreach ($tables as $table) {
+            if (is_file($table)) {
+                unlink($table);
+            }
+        }
+    }
 }
