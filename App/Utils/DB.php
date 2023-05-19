@@ -11,12 +11,10 @@ class DB
     private function __construct($tableName)
     {
         $filePath = DB_DIR . '/' . $tableName . '.json';
-
+        $this->dataFile = $filePath;
         if (! file_exists($filePath)) {
             $this->writeFile([]);
         }
-
-        $this->dataFile = $filePath;
     }
 
     public static function table($tableName)
