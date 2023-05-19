@@ -25,6 +25,20 @@ class Router
         return $this;
     }
 
+    public function actAs($user)
+    {
+        if (session_status() === PHP_SESSION_NONE) 
+        {
+
+            session_start();
+        }
+
+        $_SESSION[ 'id' ]       = $user[ 'id' ]; 
+        $_SESSION[ 'username' ] = $user[ 'username' ]; 
+
+        return $this;
+    }
+
     public function route($path)
     {
         $this->getResponse($path)->send();
