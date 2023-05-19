@@ -11,7 +11,7 @@ class Validator
         $this->request = $request;
     }
 
-    public static function make($request)
+    public static function make($request = null)
     {
         return new static($request);
     }

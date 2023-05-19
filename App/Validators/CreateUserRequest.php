@@ -8,12 +8,17 @@ class CreateUserRequest extends Validator
 {
     public function validate()
     {
+        if (! isset($this->request[ 'username' ]) || !  isset($this->request[ 'password' ]) || ! isset($this->request[ 'password_confirm' ])) {
+
+            throw new \Exception('Please fill all required fields', 400);
+        }
+
         $username         = preg_replace('/\s+/', '', $this->request['username']);
         $password         = $this->request[ 'password' ];
         $password_confirm = $this->request[ 'password_confirm' ];
 
-        if (! isset($username) || !  isset($password) || ! isset($password_confirm)) {
-            throw new \Exception('Please fill all required fields', 400);
+        if (! $username || ! $password || ! $password_confirm ) {
+            throw new \Exception(_('Please fill all required fields'), 400);
         }
 
         if ($password !== $password_confirm) {
