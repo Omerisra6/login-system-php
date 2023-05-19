@@ -7,17 +7,15 @@ use App\Utils\Router;
 $router = new Router();
 
 //Dashboard Routes
-$router->addRoute('/', [ DashboardController::class, 'show' ]);
+$router->get('/', [ DashboardController::class, 'show' ]);
 
 //User Routes
-$router->addRoute('/user/login', [ UserController::class, 'login' ]);
-$router->addRoute('/user/signup', [ UserController::class, 'create' ]);
-$router->addRoute('/user/logout', [ UserController::class, 'logout' ]);
-$router->addRoute('/user', [ UserController::class, 'get' ]);
-$router->addRoute('/user/get-logged', [ UserController::class, 'getLogged' ]);
+$router->get('/user/login', [ UserController::class, 'login' ]);
+$router->post('/user/signup', [ UserController::class, 'create' ]);
+$router->get('/user/logout', [ UserController::class, 'logout' ]);
+$router->get('/user', [ UserController::class, 'get' ]);
+$router->get('/user/get-logged', [ UserController::class, 'getLogged' ]);
 
-$request_url = $_SERVER[ 'REQUEST_URI' ];
-$path        = strtok($request_url, '?');
+$uri = $_SERVER[ 'REQUEST_URI' ];
 
-
-$router->route($path);
+$router->route($uri);

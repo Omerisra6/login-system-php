@@ -9,9 +9,20 @@ class Router
 {
     private $routes = [];
 
-    public function addRoute($path, $handler)
+    public function get($path, $handler)
     {
-        $this->routes[ $path ] = $handler;
+        $this->routes[ $path ] = [ 'handler' => $handler, 'method' => 'GET' ];
+    }
+
+    public function post($path, $handler)
+    {
+        $this->routes[ $path ] = [ 'handler' => $handler, 'method' => 'POST' ];
+    }
+
+    public function json($data)
+    {
+        $_POST = $data;    
+        return $this;
     }
 
     public function route($path)
@@ -19,8 +30,9 @@ class Router
         $this->getResponse($path)->send();
     }
 
-    public function getResponse($path)
+    public function getResponse($uri)
     {
+        $path     = strtok($uri, '?');
         $viewPath = $this->getFilePath($path);
         if (! isset($this->routes[ $path ]) && ! file_exists($viewPath)) {
             return Response::make(404, 'Not found');
@@ -30,7 +42,7 @@ class Router
             return HtmlResponse::make($viewPath);
         }
 
-        return $this->executeHandler($path);
+        return $this->executeHandler($uri);
     }
 
     private function getFilePath($path)
@@ -52,13 +64,15 @@ class Router
         return $queryParams;
     }
 
-    private function executeHandler($path)
+    private function executeHandler($uri)
     {
-        $queryParams = $this->extractQueryParams($path);
-        $handler     = $this->routes[ $path ];
+        $path        = strtok($uri, '?');
+        [ 'handler' => $handler, 'method' => $method ] = $this->routes[ $path ];
 
+        $request = $method === 'GET' ? $this->extractQueryParams($uri) : $_POST;
+        
         try {
-            $res = $handler($queryParams);
+            $res = $handler($request);
         } catch (\Exception $ex) {
             return Response::make($ex->getCode(), $ex->getMessage());
         }
