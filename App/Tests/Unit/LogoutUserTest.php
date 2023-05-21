@@ -4,26 +4,40 @@ namespace App\Tests\Unit;
 
 require_once __DIR__ . '/../../../config-test.php';
 
+use App\Services\UserService;
 use App\Utils\AppRouter;
 use App\Utils\DB;
+use App\Tests\TestCase;
 
-it('returns an error when a user is not logged in', function () {
-    $router = AppRouter::router();
+uses(TestCase::class);
 
-    $logoutUri = '/user/logout';
-
-    //Login user
-    $user = [ 'username' => 'omer', 'id' => 'Aa123' ];
-
-    $validLogoutResponse = $router->actAs($user)->getResponse($logoutUri);
-    $this->assertEquals(200, $validLogoutResponse->statusCode);
-
+beforeEach(function () {
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        session_destroy();
+    }
     session_start();
-    $unValidLogoutResponse = $router->getResponse($logoutUri);
-    $this->assertEquals(400, $unValidLogoutResponse->statusCode);
 });
 
 afterEach(function () {
     DB::clear();
-    session_destroy();
+});
+
+it('logs out when a user is logged in', function () {
+    //Arrange
+    $user = UserService::make()->addUser('omer', 'Aa123');
+    $this->actAs($user);
+
+    //Act
+    $validResponse = AppRouter::router()->getResponse('/user/logout');
+
+    //Assert
+    $this->assertEquals(200, $validResponse->statusCode);
+});
+
+it('returns an error when a user is not logged in', function () {
+    //Act
+    $unvalidResponse = AppRouter::router()->getResponse('/user/logout');
+
+    //Assert
+    $this->assertEquals(400, $unvalidResponse->statusCode);
 });

@@ -3,21 +3,44 @@
 namespace App\Tests\Unit;
 
 require_once __DIR__ . '/../../../config-test.php';
+
+use App\Services\UserService;
 use App\Utils\AppRouter;
 use App\Utils\DB;
+use App\Tests\TestCase;
 
-it('returns an error when a user is not logged in', function () {
-    $router = AppRouter::router();
-    $getLoggedUsersUri = '/user/get-logged';
-    $unValidGetLoggedUserResponse = $router->getResponse($getLoggedUsersUri);
-    $this->assertEquals(400, $unValidGetLoggedUserResponse->statusCode);
+uses(TestCase::class);
 
-    $user = [ 'username' => 'josh', 'id' => 'joshs-id' ];
-    $validGetLoggedUsersResponse = $router->actAs($user)->getResponse($getLoggedUsersUri);
-    $this->assertEquals(200, $validGetLoggedUsersResponse->statusCode);
+beforeEach(function () {
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        session_destroy();
+    }
+    session_start();
 });
+
 
 afterEach(function () {
     DB::clear();
-    session_destroy();
+});
+
+it('returns logged users when a user is logged in', function () {
+    //Arrange
+    $user   = UserService::make()->addUser('omer', 'Aa123');
+
+    $this->actAs($user);
+
+    //Act
+    $validGetLoggedUsersResponse =  AppRouter::router()->getResponse('/user/get-logged');
+
+    //Assert
+    $this->assertEquals(200, $validGetLoggedUsersResponse->statusCode);
+    $this->assertEquals([ $user ], $validGetLoggedUsersResponse->data);
+});
+
+it('returns an error when a user is not logged in', function () {
+    //Act
+    $unValidGetLoggedUserResponse =  AppRouter::router()->getResponse('/user/get-logged');
+
+    //Assert
+    $this->assertEquals(400, $unValidGetLoggedUserResponse->statusCode);
 });

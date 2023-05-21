@@ -30,6 +30,9 @@ class UserService
 
         $_SESSION[ 'id' ]       = $user_details[ 'id' ];
         $_SESSION[ 'username' ] = $username;
+
+        unset( $user_details[ 'hashed_password' ] );
+        return $user_details;
     }
 
     public function loginUser($username, $password)
