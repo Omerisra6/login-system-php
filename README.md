@@ -29,6 +29,8 @@
 ## Key Features
 * Docker Compatibility
   - The application is designed to work seamlessly with Docker, allowing for easy deployment and containerization of the app.
+* Testing and Debugging
+  - Includes tests to ensure the app works as expected.
 * Responsive design 
   - The app is optimized for desktop and mobile devices, ensuring a smooth experience for all users.
 * CSV Database:
@@ -62,6 +64,7 @@ This software uses the following open source packages:
 
 - [PHP](https://www.php.net/)
 - [Docker](https://www.docker.com/)
+- [Pest]((https://pestphp.com/))
 
 ## License
 
