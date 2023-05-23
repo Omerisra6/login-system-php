@@ -50,7 +50,9 @@ To clone and run this application, you'll need [Git](https://git-scm.com), [PHP]
 From your command line:
 
 ```bash
-
+# Clone this repository
+$ git clone https://github.com/Omerisra6/login-system-php
+  
 # Build Image
 docker build -t login-system-image .
 
