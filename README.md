@@ -7,7 +7,7 @@
   <br>
 </h1>
 
-<h4 align="center">A Login System App build with <a href="https://www.php.net" target="_blank">PHP</a>.</h4>
+<h4 align="center">A Login System App built with <a href="https://www.php.net" target="_blank">PHP</a>.</h4>
 <p align="center"></p>
 <p align="center">
   <a href="#key-features">Key Features</a> •
